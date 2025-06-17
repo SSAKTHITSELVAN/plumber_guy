@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ product.name }}</h2>
+    
+    <p><strong>Category:</strong> {{ product.category }}</p>
+    <p><strong>Description:</strong> {{ product.description }}</p>
+    <p><strong>Retail Price:</strong> ₹{{ product.price_retail }}</p>
+    <p><strong>Wholesale Price:</strong> ₹{{ product.price_wholesale }}</p>
+    <p><strong>Stock:</strong> {{ product.stock_quantity }} {{ product.unit }}</p>
+    <p><strong>SKU:</strong> {{ product.sku }}</p>
+    <p><strong>Rating:</strong> {{ product.rating }}</p>
+    {% if product.discount_price %}
+        <p><strong>Discount Price:</strong> ₹{{ product.discount_price }}</p>
+    {% endif %}
+    <p><strong>Vendor:</strong> {{ product.vendor.business_name }}</p>
+    <p><strong>Status:</strong> {{ product.is_active|yesno:"Active,Inactive" }}</p>
+    <p><strong>Created At:</strong> {{ product.created_at }}</p>
+    <p><strong>Updated At:</strong> {{ product.updated_at }}</p>
+
+    {% if product.image_url %}
+        <img src="{{ product.image_url }}" alt="{{ product.name }}" class="img-fluid mt-3" style="max-height: 300px;">
+    {% endif %}
+
+    <hr>
+    <a href="{% url 'products:update_product' product.pk %}" class="btn btn-warning">Edit</a>
+    <a href="{% url 'products:product_list' %}" class="btn btn-secondary">Back to Product List</a>
+</div>
+{% endblock %}

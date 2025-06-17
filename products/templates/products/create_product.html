@@ -1,0 +1,33 @@
+# products/templates/products/create_product.html
+"""
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Product</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container">
+        <h1>Create New Product</h1>
+        <p><strong>Business:</strong> {{ current_vendor.name }}</p>
+        <p><em>This product will be automatically assigned to your business.</em></p>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Product</button>
+            <a href="{% url 'products:product_list' %}">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
+"""
