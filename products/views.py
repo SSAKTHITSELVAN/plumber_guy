@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from products.models import Product
 from .forms import ProductForm
 from vendors.models.business_model import Business
+from leads.models import Lead  # Import Lead model
 
 def home(request):
     """
@@ -65,8 +66,31 @@ def product_list(request):
     })
 
 def product_detail(request, pk):
-    """View single product"""
+    """
+    View single product and CREATE LEAD when user views details
+    """
     product = get_object_or_404(Product, pk=pk)
+    
+    # CREATE LEAD: Track when user views product details
+    if request.user.is_authenticated:
+        # Check if lead already exists for this user+product combination
+        # to avoid duplicate leads (optional - remove if you want multiple leads)
+        lead, created = Lead.objects.get_or_create(
+            user=request.user,
+            product=product,
+            defaults={'timestamp': timezone.now()}
+        )
+        
+        if created:
+            print(f"New lead created: {request.user} viewed {product.name}")
+    else:
+        # For anonymous users, still create lead but without user
+        Lead.objects.create(
+            user=None,  # Anonymous user
+            product=product
+        )
+        print(f"Anonymous lead created for product: {product.name}")
+    
     return render(request, 'products/product_detail.html', {
         'product': product
     })
@@ -124,3 +148,6 @@ def delete_product(request, pk):
     return render(request, 'products/delete_product.html', {
         'product': product
     })
+
+# Add timezone import at the top
+from django.utils import timezone
