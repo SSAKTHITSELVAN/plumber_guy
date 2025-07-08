@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-5">
+            {% if product.image_url %}
+                <img src="{{ product.image_url }}" alt="{{ product.name }}" class="img-fluid rounded shadow-sm mb-4">
+            {% else %}
+                <img src="{% static 'path/to/default_product_image.png' %}" alt="No Image Available" class="img-fluid rounded shadow-sm mb-4">
+            {% endif %}
+        </div>
+
+        <div class="col-md-7">
+            <h1 class="mb-3">{{ product.name }}</h1>
+            <p class="text-muted mb-2">by <a href="#">{{ product.vendor.business_name }}</a></p>
+            <hr>
+
+            <div class="mb-3">
+                {% if product.discount_price %}
+                    <p class="text-danger mb-0">
+                        <small>M.R.P.: <span class="text-decoration-line-through">₹{{ product.price_retail }}</span></small>
+                    </p>
+                    <h3 class="text-success mb-0">Deal Price: ₹{{ product.discount_price }}</h3>
+                    <p class="text-muted">You Save: ₹{{ product.price_retail}}</p>
+                {% else %}
+                    <h3 class="mb-0">Price: ₹{{ product.price_retail }}</h3>
+                {% endif %}
+                <p><small>(Inclusive of all taxes)</small></p>
+            </div>
+
+            <div class="mb-3 d-flex align-items-center">
+                <p class="mb-0 me-3">
+                    <strong>Rating:</strong> {{ product.rating }} <i class="bi bi-star-fill text-warning"></i>
+                </p>
+                {% if product.stock_quantity > 0 %}
+                    <p class="mb-0 text-success">
+                        <strong>In Stock</strong> ({{ product.stock_quantity }} {{ product.unit }})
+                    </p>
+                {% else %}
+                    <p class="mb-0 text-danger">
+                        <strong>Out of Stock</strong>
+                    </p>
+                {% endif %}
+            </div>
+
+            <hr>
+
+            <h4 class="mb-2">About this item</h4>
+            <p>{{ product.description|linebreaksbr }}</p>
+
+            <hr>
+
+            <h4 class="mb-3">Product Specifications</h4>
+            <table class="table table-bordered table-sm">
+                <tbody>
+                    <tr>
+                        <th scope="row">Category</th>
+                        <td>{{ product.category }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">SKU</th>
+                        <td>{{ product.sku }}</td>
+                    </tr>
+                    {% if product.price_wholesale %}
+                    <tr>
+                        <th scope="row">Wholesale Price</th>
+                        <td>₹{{ product.price_wholesale }}</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <th scope="row">Status</th>
+                        <td>
+                            {% if product.is_active %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-danger">Inactive</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Created On</th>
+                        <td>{{ product.created_at|date:"M d, Y" }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Last Updated</th>
+                        <td>{{ product.updated_at|date:"M d, Y" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -5,7 +5,9 @@ from django.contrib import messages
 from vendors.models.business_model import Business
 from products.models import Product
 from leads.models import Lead  # Import Lead model
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def business_registration(request):
     # Check if user already has a business
     if Business.objects.filter(user=request.user).exists():
@@ -71,6 +73,7 @@ def admin_dashboard(request):
     return render(request, 'vendors/admin_dashboard.html', context)
 
 
+@login_required
 def leads_view(request):
     """
     Dedicated view for showing all leads (can be used for a separate leads page)

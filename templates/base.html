@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Plumber Guy - Professional Plumbing Supplies{% endblock %}</title>
     
-    <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
@@ -612,10 +609,8 @@
 </head>
 <body>
     
-    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
-            <!-- Logo (Left Side) -->
             <a class="navbar-brand" href="#">
                 <span class="brand-text">Plumber Guy</span>
                 <div class="brand-subtext">Explore Plus ✨</div>
@@ -626,17 +621,13 @@
             </button>
         
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- Search Bar (Center) -->
                 <div class="search-container mx-auto">
-                    <div class="search-box">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" class="search-input" placeholder="Search for Products, Brands and More">
-                    </div>
-                </div>
+                    <form action="{% url 'products:search_results' %}" method="get"> <div class="search-box">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" name="q" class="search-input" placeholder="Search for Products, Brands and More"> </div>
+                    </form> </div>
             
-                <!-- Right Side Options -->
                 <ul class="navbar-nav ms-auto">
-                    <!-- Account with Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle nav-option" href="#" role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-user"></i>
@@ -644,9 +635,6 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">My Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Orders</a></li>
-                            <li><a class="dropdown-item" href="#">Wishlist</a></li>
-                            <li><a class="dropdown-item" href="#">Rewards</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                             <form method="post" action="{% url 'accounts:logout' %}" style="display: inline;">
@@ -659,18 +647,6 @@
                         </ul>
                     </li>
                     
-                    <!-- Cart -->
-                    <li class="nav-item">
-                        <a class="nav-link nav-option" href="#">
-                            <div class="cart-container">
-                                <i class="fas fa-shopping-cart"></i>
-                                <span class="cart-badge">1</span>
-                            </div>
-                            <span>Cart</span>
-                        </a>
-                    </li>
-                    
-                    <!-- Become a Seller -->
                     <li class="nav-item">
                         <a class="nav-link nav-option" href="{% url 'vendors:business' %}">
                             <i class="fas fa-store"></i>
@@ -682,11 +658,9 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     {% block content %}
     {% endblock %}
     
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="row">
@@ -728,7 +702,7 @@
                     <ul class="list-unstyled">
                         <li><i class="fas fa-map-marker-alt"></i> 123 Plumbing Street, City, State 12345</li>
                         <li><i class="fas fa-phone"></i> +1 (555) 123-PIPE</li>
-                        <li><i class="fas fa-envelope"></i> info@plumberguy.com</li>
+                        <li><i class="fas fa-envelope\"></i> info@plumberguy.com</li>
                         <li><i class="fas fa-clock"></i> Mon-Fri: 8AM-6PM, Sat: 9AM-4PM</li>
                     </ul>
                 </div>
@@ -740,7 +714,6 @@
         </div>
     </footer>
     
-    <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
     {% block extra_js %}{% endblock %}
