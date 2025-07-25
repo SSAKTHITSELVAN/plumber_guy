@@ -3,7 +3,6 @@
 {% block title %}Home - Plumber Guy{% endblock %}
 
 {% block content %}
-    <!-- Hero Banner -->
     <section class="hero-banner">
         <div class="container">
             <div class="row align-items-center">
@@ -12,187 +11,114 @@
                         <h1 class="hero-title">Professional Plumbing Supplies</h1>
                         <p class="hero-subtitle">Quality pipes, fixtures, and tools for contractors and homeowners. Fast delivery, competitive prices, expert support.</p>
                         <div class="hero-cta">
-                            <button class="btn btn-accent btn-lg">Shop Now</button>
-                            <button class="btn btn-outline-light btn-lg">View Catalog</button>
+                            <a href="#" class="btn btn-primary-custom btn-lg">Shop Now</a>
+                            <a href="#" class="btn btn-outline-light-custom btn-lg">View Catalog</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <img src="https://commerce.ibo.com/media/ibo/heroslider/large/One-stop-shop_for_Plumbing_Requirements_web.jpg" 
-                        alt="Professional Plumbing"
-                        height="200px" 
-                        style="transition: transform 0.3s ease; cursor: pointer;" 
-                        onmouseover="this.style.transform='scale(1.05)'" 
-                        onmouseout="this.style.transform='scale(1)'"
-                        />
+                <div class="col-lg-6 d-none d-lg-block">
+                    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                        </div>
+                        <div class="carousel-inner rounded shadow-lg">
+                            <div class="carousel-item active" data-bs-interval="1000">
+                                <img src="https://commerce.ibo.com/media/ibo/heroslider/large/One-stop-shop_for_Plumbing_Requirements_web.jpg" class="d-block w-100 carousel-img" alt="Bathroom Fixtures">
+                            </div>
+                            <div class="carousel-item" data-bs-interval="1000">
+                                <img src="https://images.unsplash.com/photo-1517646287270-a5a9ca602e5c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 carousel-img" alt="Plumbing Tools">
+                            </div>
+                            <div class="carousel-item" data-bs-interval="1000">
+                                <img src="https://plus.unsplash.com/premium_photo-1661577094877-725f859aff3e?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 carousel-img" alt="Bathroom Plumbing">
+                            </div>
+                            <div class="carousel-item" data-bs-interval="1000">
+                                <img src="https://plus.unsplash.com/premium_photo-1664301972519-506636f0245d?q=80&w=1196&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 carousel-img" alt="Modern Plumbing Tools">
+                            </div>
+                        </div>
+                        </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- Product Categories -->
-    <section class="section-padding">
-        <div class="container">
-            <h2 class="section-title">Shop by Category</h2>
-            <div class="row">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="category-card">
-                        <div class="category-icon">
-                            <i class="fas fa-grip-lines"></i>
-                        </div>
-                        <h3 class="category-title">Pipes & Fittings</h3>
-                        <p class="category-count">350+ Products</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="category-card">
-                        <div class="category-icon">
-                            <i class="fas fa-faucet"></i>
-                        </div>
-                        <h3 class="category-title">Fixtures</h3>
-                        <p class="category-count">280+ Products</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="category-card">
-                        <div class="category-icon">
-                            <i class="fas fa-wrench"></i>
-                        </div>
-                        <h3 class="category-title">Tools</h3>
-                        <p class="category-count">450+ Products</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="category-card">
-                        <div class="category-icon">
-                            <i class="fas fa-fire"></i>
-                        </div>
-                        <h3 class="category-title">Water Heaters</h3>
-                        <p class="category-count">120+ Products</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Special Offers -->
-    <section class="special-offers">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center mb-5">
-                    <h2 class="section-title text-white">Limited Time Offers</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="offer-card">
-                        <div class="offer-icon">
-                            <i class="fas fa-percentage"></i>
-                        </div>
-                        <h3 class="offer-title">30% Off PVC Pipes</h3>
-                        <p class="offer-description">Save big on all PVC pipes and fittings. Perfect for residential and commercial projects.</p>
-                        <button class="btn btn-light">Shop Now</button>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="offer-card">
-                        <div class="offer-icon">
-                            <i class="fas fa-shipping-fast"></i>
-                        </div>
-                        <h3 class="offer-title">Free Shipping</h3>
-                        <p class="offer-description">Free delivery on orders over $150. Fast and reliable shipping to your doorstep.</p>
-                        <button class="btn btn-light">Learn More</button>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="offer-card">
-                        <div class="offer-icon">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <h3 class="offer-title">Tool Bundle Deal</h3>
-                        <p class="offer-description">Complete plumbing tool kit with 20% discount. Everything you need in one package.</p>
-                        <button class="btn btn-light">View Bundle</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- All Products Section -->
-    <section class="section-padding">
+
+
+    <section class="section-padding bg-light">
         <div class="container">
             <h2 class="section-title">All Products</h2>
+            <p class="section-subtitle">Discover our wide range of plumbing products, from essential pipes and fittings to modern fixtures and tools.</p>
             {% if products %}
                 <div class="row">
                     {% for product in products %}
                         <div class="col-lg-3 col-md-6 mb-4">
-                            <div class="product-card">
-                                {% if product.image_url %}
-                                    <img src="{{ product.image_url }}" alt="{{ product.name }}" class="product-image">
-                                {% else %}
-                                    <img src="https://via.placeholder.com/250x220/f8fafc/2563eb?text=No+Image" alt="{{ product.name }}" class="product-image">
-                                {% endif %}
-                                
-                                <h3 class="product-title">{{ product.name }}</h3>
-                                <p class="product-description">{{ product.description|truncatewords:10 }}</p>
-                                
-                                <div class="product-rating">
-                                    {% if product.rating > 0 %}
-                                        {% for i in "12345" %}
-                                            {% if forloop.counter <= product.rating %}
-                                                <i class="fas fa-star"></i>
-                                            {% else %}
-                                                <i class="far fa-star"></i>
-                                            {% endif %}
-                                        {% endfor %}
-                                        <span class="ms-1">({{ product.rating }})</span>
-                                    {% else %}
-                                        <span class="text-muted">No ratings yet</span>
-                                    {% endif %}
+                            <a href="{% url 'products:user_product_detail' product.pk %}" class="text-decoration-none">
+                                <div class="product-card-simple">
+                                    <div class="product-image-container">
+                                        {% if product.image_url %}
+                                            <img src="{{ product.image_url }}" alt="{{ product.name }}" class="product-image">
+                                        {% else %}
+                                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=250&h=220&fit=crop" alt="{{ product.name }}" class="product-image">
+                                        {% endif %}
+                                    </div>
+                                    <h3 class="product-title-simple">{{ product.name }}</h3>
+                                    <p class="product-description">{{ product.description|truncatewords:10 }}</p>
                                 </div>
-                                
-                                <div class="product-price">
-                                    {% if product.discount_price %}
-                                        ₹{{ product.discount_price }} 
-                                        <small class="text-muted"><s>₹{{ product.price_retail }}</s></small>
-                                    {% else %}
-                                        ₹{{ product.price_retail }}
-                                    {% endif %}
-                                </div>
-                                
-                                <div class="product-vendor">
-                                    <small class="text-muted">by {{ product.vendor.business_name }}</small>
-                                </div>
-                                
-                                <div class="product-stock">
-                                    {% if product.stock_quantity > 0 %}
-                                        <small class="text-success">In Stock ({{ product.stock_quantity }} {{ product.unit }})</small>
-                                    {% else %}
-                                        <small class="text-danger">Out of Stock</small>
-                                    {% endif %}
-                                </div>
-                                
-                                <div class="mt-2">
-                                    <a href="{% url 'products:user_product_detail' product.pk %}" class="btn btn-primary-custom w-100">View Details</a>
-                                </div>
-                            </div>
+                            </a>
                         </div>
                     {% endfor %}
                 </div>
             {% else %}
-                <div class="text-center py-5">
-                    <h4>No products available</h4>
+                <div class="text-center py-5 border rounded bg-white shadow-sm">
+                    <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+                    <h4 class="text-dark">No products available</h4>
                     <p class="text-muted">Check back later for new products from our vendors.</p>
+                    <a href="#" class="btn btn-primary-custom mt-3">Browse Categories</a>
                 </div>
             {% endif %}
         </div>
     </section>
-    
-    <!-- Trust Indicators -->
+
+    <section class="special-offers">
+        <div class="container text-center">
+            <h2 class="section-title text-white">Special Offers & Discounts</h2>
+            <p class="section-subtitle text-white-75">Don't miss out on our limited-time deals on top-rated plumbing essentials!</p>
+            <div class="row mt-5">
+                <div class="col-md-4 mb-4">
+                    <div class="offer-card">
+                        <i class="offer-icon fas fa-percent"></i>
+                        <h3 class="offer-title">Up to 20% Off Pipes</h3>
+                        <p class="offer-description">Shop our collection of durable pipes and fittings and save big this week!</p>
+                        <a href="#" class="btn btn-outline-light-custom btn-sm">Shop Now</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="offer-card">
+                        <i class="offer-icon fas fa-truck"></i>
+                        <h3 class="offer-title">Free Shipping on Orders Over $100</h3>
+                        <p class="offer-description">Get your supplies delivered right to your door, on us!</p>
+                        <a href="#" class="btn btn-outline-light-custom btn-sm">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="offer-card">
+                        <i class="offer-icon fas fa-certificate"></i>
+                        <h3 class="offer-title">Exclusive Pro Member Deals</h3>
+                        <p class="offer-description">Join our professional program for exclusive discounts and benefits.</p>
+                        <a href="#" class="btn btn-outline-light-custom btn-sm">Join Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="trust-section">
         <div class="container">
+            <h2 class="section-title">Why Choose Plumber Guy?</h2>
+            <p class="section-subtitle">We are committed to providing you with the best experience and quality products.</p>
             <div class="row">
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6 mb-4">
                     <div class="trust-item">
                         <div class="trust-icon">
                             <i class="fas fa-shield-alt"></i>
@@ -201,7 +127,7 @@
                         <p class="trust-description">All products backed by manufacturer warranty and our quality guarantee.</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6 mb-4">
                     <div class="trust-item">
                         <div class="trust-icon">
                             <i class="fas fa-shipping-fast"></i>
@@ -210,7 +136,7 @@
                         <p class="trust-description">Same-day shipping on orders placed before 3 PM. Next-day delivery available.</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6 mb-4">
                     <div class="trust-item">
                         <div class="trust-icon">
                             <i class="fas fa-headset"></i>
@@ -219,7 +145,7 @@
                         <p class="trust-description">Professional plumbing experts available to help with product selection.</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6 mb-4">
                     <div class="trust-item">
                         <div class="trust-icon">
                             <i class="fas fa-undo-alt"></i>
@@ -231,23 +157,67 @@
             </div>
         </div>
     </section>
-    
-    <!-- Newsletter Section -->
-    <section class="newsletter-section">
+
+    <section class="section-padding bg-light">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6 mx-auto text-center">
-                    <h2 class="section-title text-white">Stay Updated</h2>
-                    <p class="mb-4">Get the latest deals, new product announcements, and plumbing tips delivered to your inbox.</p>
-                    <div class="newsletter-form">
-                        <div class="input-group">
-                            <input type="email" class="newsletter-input" placeholder="Enter your email address">
-                            <button class="btn btn-accent">Subscribe</button>
-                        </div>
-                        <small class="text-light mt-2 d-block">We respect your privacy. Unsubscribe at any time.</small>
+            <h2 class="section-title">Explore Our Categories</h2>
+            <p class="section-subtitle">Find exactly what you need with our well-organized product categories.</p>
+            <div class="horizontal-scroll">
+                <div class="scroll-item">
+                    <div class="category-card">
+                        <i class="category-icon fas fa-faucet"></i>
+                        <h4 class="category-title">Faucets & Taps</h4>
+                        <p class="category-count">120 Products</p>
+                    </div>
+                </div>
+                <div class="scroll-item">
+                    <div class="category-card">
+                        <i class="category-icon fas fa-toilet"></i>
+                        <h4 class="category-title">Toilets & Accessories</h4>
+                        <p class="category-count">85 Products</p>
+                    </div>
+                </div>
+                <div class="scroll-item">
+                    <div class="category-card">
+                        <i class="category-icon fas fa-shower"></i>
+                        <h4 class="category-title">Showers & Tubs</h4>
+                        <p class="category-count">60 Products</p>
+                    </div>
+                </div>
+                <div class="scroll-item">
+                    <div class="category-card">
+                        <i class="category-icon fas fa-pipe"></i>
+                        <h4 class="category-title">Pipes & Fittings</h4>
+                        <p class="category-count">200 Products</p>
+                    </div>
+                </div>
+                <div class="scroll-item">
+                    <div class="category-card">
+                        <i class="category-icon fas fa-wrench"></i>
+                        <h4 class="category-title">Tools & Equipment</h4>
+                        <p class="category-count">90 Products</p>
+                    </div>
+                </div>
+                 <div class="scroll-item">
+                    <div class="category-card">
+                        <i class="category-icon fas fa-water"></i>
+                        <h4 class="category-title">Water Heaters</h4>
+                        <p class="category-count">30 Products</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <section class="newsletter-section text-center">
+        <div class="container">
+            <h2 class="newsletter-title">Stay Updated with Plumber Guy!</h2>
+            <p class="newsletter-description">Subscribe to our newsletter for exclusive deals, new product alerts, and plumbing tips directly to your inbox.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address">
+                <button type="submit" class="btn-subscribe">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
 {% endblock %}

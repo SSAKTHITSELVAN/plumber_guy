@@ -1,95 +1,211 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-5">
-            {% if product.image_url %}
-                <img src="{{ product.image_url }}" alt="{{ product.name }}" class="img-fluid rounded shadow-sm mb-4">
-            {% else %}
-                <img src="{% static 'path/to/default_product_image.png' %}" alt="No Image Available" class="img-fluid rounded shadow-sm mb-4">
-            {% endif %}
-        </div>
-
-        <div class="col-md-7">
-            <h1 class="mb-3">{{ product.name }}</h1>
-            <p class="text-muted mb-2">by <a href="#">{{ product.vendor.business_name }}</a></p>
-            <hr>
-
-            <div class="mb-3">
-                {% if product.discount_price %}
-                    <p class="text-danger mb-0">
-                        <small>M.R.P.: <span class="text-decoration-line-through">₹{{ product.price_retail }}</span></small>
-                    </p>
-                    <h3 class="text-success mb-0">Deal Price: ₹{{ product.discount_price }}</h3>
-                    <p class="text-muted">You Save: ₹{{ product.price_retail}}</p>
-                {% else %}
-                    <h3 class="mb-0">Price: ₹{{ product.price_retail }}</h3>
-                {% endif %}
-                <p><small>(Inclusive of all taxes)</small></p>
-            </div>
-
-            <div class="mb-3 d-flex align-items-center">
-                <p class="mb-0 me-3">
-                    <strong>Rating:</strong> {{ product.rating }} <i class="bi bi-star-fill text-warning"></i>
-                </p>
-                {% if product.stock_quantity > 0 %}
-                    <p class="mb-0 text-success">
-                        <strong>In Stock</strong> ({{ product.stock_quantity }} {{ product.unit }})
-                    </p>
-                {% else %}
-                    <p class="mb-0 text-danger">
-                        <strong>Out of Stock</strong>
-                    </p>
-                {% endif %}
-            </div>
-
-            <hr>
-
-            <h4 class="mb-2">About this item</h4>
-            <p>{{ product.description|linebreaksbr }}</p>
-
-            <hr>
-
-            <h4 class="mb-3">Product Specifications</h4>
-            <table class="table table-bordered table-sm">
-                <tbody>
-                    <tr>
-                        <th scope="row">Category</th>
-                        <td>{{ product.category }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">SKU</th>
-                        <td>{{ product.sku }}</td>
-                    </tr>
-                    {% if product.price_wholesale %}
-                    <tr>
-                        <th scope="row">Wholesale Price</th>
-                        <td>₹{{ product.price_wholesale }}</td>
-                    </tr>
+<div class="container py-5">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        <div class="row g-0">
+            <div class="col-md-6 d-flex align-items-center justify-content-center bg-light-subtle p-4">
+                <div class="position-relative w-100 h-100 d-flex align-items-center justify-content-center" style="min-height: 400px;">
+                     {% if product.image_url %}
+                        <img src="{{ product.image_url }}" alt="{{ product.name }}" class="img-fluid rounded-3 product-image-detail">
+                    {% else %}
+                        <img src="{% static 'path/to/default_product_image.png' %}" alt="No Image Available" class="img-fluid rounded-3 product-image-detail">
                     {% endif %}
-                    <tr>
-                        <th scope="row">Status</th>
-                        <td>
-                            {% if product.is_active %}
-                                <span class="badge bg-success">Active</span>
+                </div>
+            </div>
+
+            <div class="col-md-6 p-4 p-md-5 d-flex flex-column">
+                <h1 class="mb-2 display-6 fw-bold text-primary-emphasis">{{ product.name }}</h1>
+                <p class="text-muted mb-3">
+                    by <a href="#" class="text-decoration-none fw-medium link-primary link-offset-2-hover link-underline-opacity-25 link-underline-opacity-100-hover">{{ product.vendor.business_name }}</a>
+                </p>
+
+                <div class="d-flex align-items-center mb-3">
+                    <div class="text-warning me-2">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= product.rating|floatformat:"0"|add:"0" %}
+                                <i class="bi bi-star-fill"></i>
+                            {% elif product.rating > forloop.counter|add:"-1" and product.rating < forloop.counter %}
+                                <i class="bi bi-star-half"></i>
                             {% else %}
-                                <span class="badge bg-danger">Inactive</span>
+                                <i class="bi bi-star"></i>
                             {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Created On</th>
-                        <td>{{ product.created_at|date:"M d, Y" }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Last Updated</th>
-                        <td>{{ product.updated_at|date:"M d, Y" }}</td>
-                    </tr>
-                </tbody>
-            </table>
+                        {% endfor %}
+                    </div>
+                    <span class="text-muted small ms-1">{{ product.rating }} ({{ product.review_count }} reviews)</span>
+                </div>
+
+                <hr class="my-3">
+
+                <div class="mb-4">
+                    {% if product.discount_price %}
+                        <p class="text-secondary mb-1 small">
+                            M.R.P.: <span class="text-decoration-line-through">₹{{ product.price_retail }}</span>
+                        </p>
+                        <h3 class="text-primary-emphasis mb-1 fw-bold fs-2">Deal Price: ₹{{ product.discount_price }}</h3>
+                        {% if product.savings %}
+                            <p class="text-primary-emphasis mb-2 fs-6 fw-semibold">You Save: ₹{{ product.savings }} ({{ product.discount_percentage }}% off)</p>
+                        {% endif %}
+                    {% else %}
+                        <h3 class="mb-1 fw-bold fs-2 text-primary-emphasis">Price: ₹{{ product.price_retail }}</h3>
+                    {% endif %}
+                    <p class="text-muted small fst-italic">Inclusive of all taxes</p>
+                </div>
+
+                <div class="mb-4">
+                    {% if product.stock_quantity > 0 %}
+                        <p class="mb-2 text-success fw-semibold fs-6">
+                            <i class="bi bi-check-circle-fill me-1"></i> In Stock
+                            {% if product.stock_quantity < 10 %}
+                                 <span class="badge bg-warning text-dark ms-2">Only {{ product.stock_quantity }} left!</span>
+                            {% endif %}
+                        </p>
+                        <p class="text-muted small">Available: {{ product.stock_quantity }} {{ product.unit }}</p>
+                    {% else %}
+                        <p class="mb-2 text-danger fw-semibold fs-6">
+                            <i class="bi bi-x-circle-fill me-1"></i> Out of Stock
+                        </p>
+                    {% endif %}
+                </div>
+
+                <hr class="my-4">
+
+                <h4 class="mb-3 fw-semibold text-primary-emphasis">About this item</h4>
+                <div class="product-description mb-4 text-muted">
+                    {{ product.description|linebreaksbr }}
+                </div>
+
+                <h4 class="mb-3 fw-semibold text-primary-emphasis">Product Specifications</h4>
+                <div class="table-responsive">
+                    <table class="table table-borderless table-sm table-striped">
+                        <tbody>
+                            <tr class="border-bottom">
+                                <th scope="row" class="w-25 py-2 text-secondary">Category</th>
+                                <td class="py-2">{{ product.category }}</td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <th scope="row" class="py-2 text-secondary">SKU</th>
+                                <td class="py-2">{{ product.sku }}</td>
+                            </tr>
+                             {% if product.price_wholesale %}
+                            <tr class="border-bottom">
+                                <th scope="row" class="py-2 text-secondary">Wholesale Price</th>
+                                <td class="py-2">₹{{ product.price_wholesale }}</td>
+                            </tr>
+                            {% endif %}
+                            <tr class="border-bottom">
+                                <th scope="row" class="py-2 text-secondary">Status</th>
+                                <td class="py-2">
+                                    {% if product.is_active %}
+                                        <span class="badge bg-primary-subtle text-primary-emphasis border border-primary-subtle rounded-pill px-3 py-1">Active</span>
+                                    {% else %}
+                                        <span class="badge bg-danger-subtle text-danger-emphasis border border-danger-subtle rounded-pill px-3 py-1">Inactive</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <th scope="row" class="py-2 text-secondary">Created On</th>
+                                <td class="py-2">{{ product.created_at|date:"M d, Y" }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="py-2 text-secondary">Last Updated</th>
+                                <td class="py-2">{{ product.updated_at|date:"M d, Y" }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Blue Theme Custom CSS for product detail page */
+
+    /* Use Bootstrap 5's color system variables for consistency */
+    :root {
+        --bs-primary-rgb: 13, 110, 253; /* Default Bootstrap primary */
+        --bs-primary-emphasis-rgb: 11, 94, 212; /* Slightly darker for emphasis */
+        --bs-primary-subtle-rgb: 224, 235, 255; /* Lighter shade for backgrounds */
+    }
+
+    /* Ensure primary color is used for key elements */
+    .text-primary-emphasis {
+        color: var(--bs-primary-emphasis) !important; /* Emphasize headings and key prices */
+    }
+
+    /* Image Styling */
+    .product-image-detail {
+        max-height: 450px;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+        border-radius: var(--bs-border-radius-lg);
+        box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .product-image-detail:hover {
+        transform: scale(1.02);
+    }
+
+    /* Card Styling */
+    .card {
+        border-radius: 1rem;
+        background-color: #fff; /* Ensure white background */
+    }
+
+    /* Description Styling */
+    .product-description {
+        line-height: 1.7;
+        color: #495057;
+    }
+
+    /* Table Styling */
+    .table th {
+        font-weight: 500;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .table td {
+        font-size: 0.95rem;
+    }
+
+    /* Badge Styling */
+    .badge {
+        padding: 0.4em 0.8em;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 767.98px) {
+        .container {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .card {
+            border-radius: 0.75rem;
+        }
+        .p-4 {
+            padding: 1rem !important;
+        }
+        .p-md-5 {
+            padding: 1.5rem !important;
+        }
+        .product-image-detail {
+            max-height: 300px;
+        }
+        .display-6 {
+            font-size: calc(1.375rem + 1.5vw);
+        }
+        .fs-2 {
+            font-size: calc(1.325rem + 0.9vw);
+        }
+    }
+</style>
 {% endblock %}

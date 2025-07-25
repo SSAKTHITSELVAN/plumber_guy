@@ -1,472 +1,1236 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vendor Admin - Plumbing Shop</title>
-  <!-- Bootstrap CSS CDN -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
-  <style>
-    body {
-      background-color: #f7f9fc;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .navbar-brand {
-      font-weight: 700;
-      color: #2874f0; /* Flipkart blue */
-    }
-    .sidebar {
-      background-color: #2874f0;
-      color: white;
-      min-height: 100vh;
-      padding-top: 20px;
-    }
-    .sidebar a {
-      color: white;
-      text-decoration: none;
-      display: block;
-      padding: 12px 20px;
-      margin-bottom: 5px;
-      border-radius: 4px;
-    }
-    .sidebar a:hover, .sidebar a.active {
-      background-color: #1b4db5;
-    }
-    .content-header {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-    .product-card {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 20px;
-      background-color: white;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s ease-in-out;
-    }
-    .product-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-    .product-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 6px;
-      margin-bottom: 15px;
-    }
-    .product-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 8px;
-    }
-    .product-category {
-      color: #666;
-      font-style: italic;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-    .product-description {
-      color: #555;
-      font-size: 14px;
-      margin-bottom: 15px;
-      line-height: 1.4;
-    }
-    .pricing-section {
-      background-color: #f8f9fa;
-      padding: 15px;
-      border-radius: 6px;
-      margin-bottom: 15px;
-    }
-    .price-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-size: 14px;
-    }
-    .price-label {
-      font-weight: 500;
-      color: #666;
-    }
-    .price-value {
-      font-weight: 600;
-      color: #333;
-    }
-    .discount-price {
-      color: #e74c3c;
-      font-weight: 700;
-    }
-    .stock-section {
-      background-color: #e8f5e8;
-      padding: 12px;
-      border-radius: 6px;
-      margin-bottom: 15px;
-    }
-    .stock-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 5px;
-      font-size: 14px;
-    }
-    .rating-section {
-      color: #f39c12;
-      font-weight: 600;
-      margin-bottom: 15px;
-    }
-    .product-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .btn-primary {
-      background-color: #2874f0;
-      border-color: #2874f0;
-      font-size: 12px;
-      padding: 6px 12px;
-    }
-    .btn-primary:hover {
-      background-color: #1b4db5;
-      border-color: #1b4db5;
-    }
-    .btn-outline-danger {
-      font-size: 12px;
-      padding: 6px 12px;
-    }
-    .btn-info {
-      font-size: 12px;
-      padding: 6px 12px;
-    }
-    .no-products {
-      text-align: center;
-      padding: 60px 20px;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .no-products h3 {
-      color: #666;
-      margin-bottom: 15px;
-    }
-    .no-products p {
-      color: #888;
-      margin-bottom: 25px;
-    }
-    .message {
-      padding: 12px 15px;
-      margin-bottom: 20px;
-      border-radius: 6px;
-      background-color: #d1ecf1;
-      color: #0c5460;
-      border: 1px solid #bee5eb;
-    }
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 20px;
-    }
-    
-    /* Tab Styles */
-    .nav-tabs .nav-link {
-      color: #2874f0;
-      border-bottom: 2px solid transparent;
-      background-color: transparent;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-    }
-    .nav-tabs .nav-link.active {
-      color: #1b4db5;
-      border-bottom-color: #2874f0;
-      background-color: transparent;
-    }
-    .nav-tabs .nav-link:hover {
-      border-bottom-color: #2874f0;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vendor Admin - Plumbing Shop</title>
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-    /* Lead Styles */
-    .lead-card {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 15px;
-      background-color: white;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    .lead-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .lead-user {
-      font-weight: 600;
-      color: #333;
-    }
-    .lead-timestamp {
-      font-size: 12px;
-      color: #666;
-    }
-    .lead-product {
-      color: #2874f0;
-      font-weight: 500;
-      margin-bottom: 5px;
-    }
-    .lead-vendor {
-      font-size: 12px;
-      color: #888;
-    }
-    .anonymous-user {
-      color: #e74c3c;
-      font-style: italic;
-    }
-  </style>
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+    <style>
+      :root {
+        --primary-color: #6366f1;
+        --primary-dark: #4f46e5;
+        --secondary-color: #f8fafc;
+        --accent-color: #10b981;
+        --danger-color: #ef4444;
+        --warning-color: #f59e0b;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --border-color: #e2e8f0;
+        --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        color: var(--text-primary);
+        line-height: 1.6;
+      }
+
+      /* Navbar */
+      .navbar {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--primary-color) !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .navbar-brand::before {
+        content: " ";
+        font-size: 1.8rem;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        background: linear-gradient(
+          180deg,
+          var(--primary-color) 0%,
+          var(--primary-dark) 100%
+        );
+        color: white;
+        min-height: 100vh;
+        padding: 2rem 0;
+        box-shadow: 4px 0 6px -1px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .sidebar::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 50%,
+          rgba(255, 255, 255, 0.05) 100%
+        );
+        pointer-events: none;
+      }
+
+      .sidebar a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 24px;
+        margin: 4px 16px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        position: relative;
+      }
+
+      .sidebar a:hover,
+      .sidebar a.active {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .sidebar a.active::before {
+        content: "";
+        position: absolute;
+        left: -24px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 24px;
+        background: white;
+        border-radius: 2px;
+      }
+
+      /* Main Content */
+      main {
+        padding: 2rem !important;
+        position: relative;
+      }
+
+      .content-header {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        color: var(--text-primary);
+        position: relative;
+      }
+
+      .content-header::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+        border-radius: 2px;
+      }
+
+      /* Messages */
+      .message {
+        padding: 16px 20px;
+        margin-bottom: 24px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        color: #1e40af;
+        border: 1px solid #93c5fd;
+        border-left: 4px solid var(--primary-color);
+        box-shadow: var(--card-shadow);
+      }
+
+      /* Tabs */
+      .nav-tabs {
+        border-bottom: 2px solid var(--border-color);
+        margin-bottom: 2rem;
+      }
+
+      .nav-tabs .nav-link {
+        color: var(--text-secondary);
+        border: none;
+        border-bottom: 3px solid transparent;
+        background: transparent;
+        padding: 16px 24px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        border-radius: 8px 8px 0 0;
+      }
+
+      .nav-tabs .nav-link:hover {
+        border-bottom-color: var(--primary-color);
+        color: var(--primary-color);
+        background: rgba(99, 102, 241, 0.05);
+      }
+
+      .nav-tabs .nav-link.active {
+        color: var(--primary-color);
+        border-bottom-color: var(--primary-color);
+        background: white;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Product Cards */
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 24px;
+      }
+
+      .product-card {
+        /* background: white; */
+        background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+        border-radius: 16px;
+        padding: 0;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--card-shadow);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--card-shadow-hover);
+      }
+
+      .product-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+      }
+
+      .product-image-container {
+        width: calc(100% - 40px);
+        height: 200px; /* Reduced from 220px */
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px; /* Increased border radius */
+        margin: 20px 20px 16px 20px; /* Reduced bottom margin */
+        overflow: hidden;
+        position: relative;
+        border: 2px solid #e2e8f0;
+        transition: all 0.3s ease;
+      }
+
+      /* 2. UPDATE this existing CSS rule - change object-fit from cover to contain */
+      .product-image {
+        width: 90%; /* Reduced from 100% for padding effect */
+        height: 90%; /* Reduced from 100% for padding effect */
+        object-fit: cover;
+        transition: transform 0.3s ease;
+        border-radius: 12px;
+        filter: contrast(1.1) brightness(1.05); /* Enhance image quality */
+      }
+
+      .product-card:hover .product-image-container {
+        border-color: var(--primary-color);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+      }
+
+      /* 3. ADD this new CSS rule for better image handling */
+      .product-image-container img {
+        display: block;
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+      }
+
+      /* 4. ADD fallback styling for broken images */
+      .product-image-container img[alt]:after {
+        content: attr(alt);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        text-align: center;
+      }
+
+      .product-card:hover .product-image {
+        transform: scale(1.05);
+      }
+
+      .placeholder-icon {
+        font-size: 4rem;
+        color: var(--text-secondary);
+        opacity: 0.5;
+      }
+
+      .product-content {
+        padding: 16px 20px 20px 20px; /* Reduced top padding */
+      }
+
+      .product-title {
+        font-size: 1.2rem; /* Slightly reduced */
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 6px; /* Reduced margin */
+        line-height: 1.2;
+        letter-spacing: -0.02em; /* Tighter letter spacing */
+      }
+
+      .product-category {
+        color: var(--primary-color);
+        font-weight: 600;
+        font-size: 0.8rem; /* Slightly smaller */
+        margin-bottom: 10px; /* Reduced margin */
+        text-transform: uppercase;
+        letter-spacing: 0.8px; /* Increased letter spacing */
+        background: rgba(99, 102, 241, 0.1);
+        padding: 4px 8px;
+        border-radius: 6px;
+        display: inline-block;
+      }
+
+      .product-description {
+        color: var(--text-secondary);
+        font-size: 0.85rem; /* Slightly smaller */
+        margin-bottom: 16px; /* Reduced margin */
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .pricing-section {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        padding: 14px 16px; /* Reduced padding */
+        border-radius: 12px;
+        margin-bottom: 14px; /* Reduced margin */
+        border: 1px solid #e2e8f0;
+        border-left: 4px solid var(--primary-color);
+      }
+
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px; /* Reduced margin */
+        font-size: 0.85rem; /* Slightly smaller */
+      }
+
+      .price-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .price-label {
+        font-weight: 500;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .price-value {
+        font-weight: 800; /* Increased weight */
+        color: var(--text-primary);
+        font-size: 1rem;
+        font-family: "Inter", monospace; /* Monospace for numbers */
+      }
+
+      .discount-price {
+        color: var(--danger-color);
+        font-weight: 800;
+        position: relative;
+        background: rgba(239, 68, 68, 0.1);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: "Inter", monospace;
+      }
+
+      .discount-price::before {
+        margin-right: 4px;
+      }
+
+      /* Stock Section */
+      .stock-section {
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        padding: 14px 16px; /* Reduced padding */
+        border-radius: 12px;
+        margin-bottom: 14px; /* Reduced margin */
+        border: 1px solid #bbf7d0;
+        border-left: 4px solid var(--accent-color);
+      }
+
+      .stock-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px; /* Reduced margin */
+        font-size: 0.85rem; /* Slightly smaller */
+      }
+
+      .stock-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .rating-section {
+        color: var(--warning-color);
+        font-weight: 600;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background: #fef3c7;
+        border-radius: 8px;
+        border: 1px solid #fcd34d;
+      }
+
+      .product-actions {
+        display: flex;
+        gap: 6px; /* Reduced gap */
+        flex-wrap: wrap;
+        margin-top: 16px;
+      }
+
+      .btn {
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .btn-sm {
+        padding: 6px 12px; /* Reduced padding */
+        font-size: 0.8rem; /* Smaller font */
+        border-radius: 6px;
+        font-weight: 600;
+      }
+
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color) 0%,
+          var(--primary-dark) 100%
+        );
+        color: white;
+        box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
+        background: linear-gradient(
+          135deg,
+          var(--primary-dark) 0%,
+          #3730a3 100%
+        );
+      }
+
+      .btn-info {
+        background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+        color: white;
+        box-shadow: 0 2px 4px rgba(6, 182, 212, 0.2);
+      }
+
+      .btn-info:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(6, 182, 212, 0.3);
+      }
+
+      .btn-outline-danger {
+        background: transparent;
+        color: var(--danger-color);
+        border: 2px solid var(--danger-color);
+      }
+
+      .btn-outline-danger:hover {
+        background: var(--danger-color);
+        color: white;
+        transform: translateY(-1px);
+      }
+
+      .btn-success {
+        background: linear-gradient(
+          135deg,
+          var(--accent-color) 0%,
+          #059669 100%
+        );
+        color: white;
+        box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+      }
+
+      .btn-success:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+      }
+
+      .btn-lg {
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
+
+      /* No Products/Leads */
+      .no-products {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 16px;
+        box-shadow: var(--card-shadow);
+        border: 1px solid var(--border-color);
+      }
+
+      .no-products h3 {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .no-products p {
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+      }
+
+      .no-products::before {
+        content: "📦";
+        font-size: 5rem;
+        display: block;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      /* Lead Cards */
+      .lead-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--card-shadow);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .lead-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--accent-color),
+          var(--primary-color)
+        );
+      }
+
+      .lead-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--card-shadow-hover);
+      }
+
+      .lead-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+      }
+
+      .lead-user {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 1rem;
+      }
+
+      .lead-timestamp {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        background: var(--secondary-color);
+        padding: 4px 8px;
+        border-radius: 6px;
+      }
+
+      .lead-product {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+      }
+
+      .lead-vendor {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-bottom: 12px;
+      }
+
+      .anonymous-user {
+        color: var(--danger-color);
+        font-style: italic;
+      }
+
+      /* Stats Cards */
+      .stats-card {
+        background: white;
+        border-radius: 16px;
+        padding: 24px;
+        text-align: center;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--card-shadow);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stats-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+      }
+
+      .stats-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--card-shadow-hover);
+      }
+
+      .stats-card .card-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 8px;
+      }
+
+      .stats-card .card-text {
+        color: var(--text-secondary);
+        font-weight: 500;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      /* Badge */
+      .badge {
+        font-weight: 600;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 0.75rem;
+      }
+
+      .bg-info {
+        background: linear-gradient(135deg, #06b6d4, #0891b2) !important;
+      }
+
+      @media (max-width: 768px) {
+        .products-grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .product-image-container {
+          height: 180px;
+          margin: 16px 16px 12px 16px;
+        }
+
+        .product-content {
+          padding: 12px 16px 16px 16px;
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .sidebar {
+          position: fixed;
+          left: -100%;
+          width: 280px;
+          z-index: 1000;
+          transition: left 0.3s ease;
+        }
+
+        .sidebar.show {
+          left: 0;
+        }
+
+        main {
+          margin-left: 0;
+        }
+
+        .products-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .content-header {
+          font-size: 1.5rem;
+        }
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .product-card,
+      .lead-card,
+      .stats-card {
+        animation: fadeInUp 0.5s ease-out;
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--secondary-color);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">PlumbKart Admin</a>
+        <button
+          class="navbar-toggler d-md-none"
+          type="button"
+          onclick="toggleSidebar()"
+        >
+          <i class="bi bi-list"></i>
+        </button>
+      </div>
+    </nav>
+
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">PlumbKart Admin</a>
-    </div>
-  </nav>
+      <div class="row">
+        <nav class="col-md-2 sidebar" id="sidebar">
+          <a href="#" class="active">
+            <i class="bi bi-speedometer2"></i>
+            Dashboard
+          </a>
+          <a href="{% url 'products:create_product' %}">
+            <i class="bi bi-plus-circle"></i>
+            Add Product
+          </a>
+          <a href="{% url 'products:product_list' %}">
+            <i class="bi bi-box-seam"></i>
+            Manage Products
+          </a>
+          <a href="#" onclick="showLeadsTab()">
+            <i class="bi bi-people"></i>
+            Leads
+          </a>
+          <a href="#">
+            <i class="bi bi-person-circle"></i>
+            Profile
+          </a>
+        </nav>
 
-  <div class="container-fluid">
-    <div class="row">
-      <nav class="col-md-2 sidebar">
-        <a href="#" class="active">Dashboard</a>
-        <a href="{% url 'products:create_product' %}">Add Product</a>
-        <a href="#">Manage Products</a>
-        <a href="#" onclick="showLeadsTab()">Leads</a>
-        <a href="#">Profile</a>
-      </nav>
+        <main class="col-md-10">
+          <h1 class="content-header">Welcome, Vendor!</h1>
 
-      <main class="col-md-10 py-4">
-        <h2 class="content-header">Welcome, Vendor!</h2>
+          <!-- Display Messages -->
+          {% if messages %} {% for message in messages %}
+          <div class="message">
+            <i class="bi bi-info-circle me-2"></i>
+            {{ message }}
+          </div>
+          {% endfor %} {% endif %}
 
-        <!-- Display Messages -->
-        {% if messages %}
-          {% for message in messages %}
-            <div class="message {{ message.tags }}">
-              {{ message }}
-            </div>
-          {% endfor %}
-        {% endif %}
+          <!-- Tab Navigation -->
+          <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="products-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#products"
+                type="button"
+                role="tab"
+              >
+                <i class="bi bi-box-seam me-2"></i>
+                Products ({{ products|length }})
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="leads-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#leads"
+                type="button"
+                role="tab"
+              >
+                <i class="bi bi-people me-2"></i>
+                Leads ({{ total_leads|default:0 }})
+              </button>
+            </li>
+          </ul>
 
-        <!-- Tab Navigation -->
-        <ul class="nav nav-tabs mb-4" id="adminTabs" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="products-tab" data-bs-toggle="tab" data-bs-target="#products" type="button" role="tab">
-              Products ({{ products|length }})
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="leads-tab" data-bs-toggle="tab" data-bs-target="#leads" type="button" role="tab">
-              Leads ({{ total_leads|default:0 }})
-            </button>
-          </li>
-        </ul>
-
-        <!-- Tab Content -->
-        <div class="tab-content" id="adminTabsContent">
-          
-          <!-- Products Tab -->
-          <div class="tab-pane fade show active" id="products" role="tabpanel">
-            {% if products %}
-              <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4>Your Products ({{ products|length }})</h4>
-                <a href="{% url 'products:create_product' %}" class="btn btn-success">
-                  <i class="bi bi-plus"></i> Add New Product
+          <!-- Tab Content -->
+          <div class="tab-content" id="adminTabsContent">
+            <!-- Products Tab -->
+            <div
+              class="tab-pane fade show active"
+              id="products"
+              role="tabpanel"
+            >
+              {% if products %}
+              <div
+                class="d-flex justify-content-between align-items-center mb-4"
+              >
+                <h4 class="mb-0">
+                  <i class="bi bi-box-seam me-2"></i>
+                  Your Products ({{ products|length }})
+                </h4>
+                <a
+                  href="{% url 'products:create_product' %}"
+                  class="btn btn-success"
+                >
+                  <i class="bi bi-plus"></i>
+                  Add New Product
                 </a>
               </div>
 
               <div class="products-grid">
                 {% for product in products %}
-                  <div class="product-card">
+                <div class="product-card">
+                  <div class="product-image-container">
                     {% if product.image_url %}
-                      <img src="{{ product.image_url }}" alt="{{ product.name }}" class="product-image">
+                    <img
+                      src="{{ product.image_url }}"
+                      alt="{{ product.name }}"
+                      class="product-image"
+                    />
+                    {% else %}
+                    <i class="bi bi-image placeholder-icon"></i>
                     {% endif %}
-                    
+                  </div>
+
+                  <div class="product-content">
                     <h5 class="product-title">{{ product.name }}</h5>
-                    <p class="product-category">Category: {{ product.category }}</p>
-                    <p class="product-description">{{ product.description|truncatewords:15 }}</p>
-                    
+                    <p class="product-category">{{ product.category }}</p>
+                    <p class="product-description">
+                      {{ product.description|truncatewords:15 }}
+                    </p>
+
                     <div class="pricing-section">
                       <div class="price-row">
-                        <span class="price-label">Retail Price:</span>
-                        <span class="price-value">₹{{ product.price_retail }}</span>
+                        <span class="price-label">
+                          <i class="bi bi-tag"></i>
+                          Retail Price:
+                        </span>
+                        <span class="price-value"
+                          >₹{{ product.price_retail }}</span
+                        >
                       </div>
                       <div class="price-row">
-                        <span class="price-label">Wholesale Price:</span>
-                        <span class="price-value">₹{{ product.price_wholesale }}</span>
+                        <span class="price-label">
+                          <i class="bi bi-tags"></i>
+                          Wholesale Price:
+                        </span>
+                        <span class="price-value"
+                          >₹{{ product.price_wholesale }}</span
+                        >
                       </div>
                       {% if product.discount_price %}
-                        <div class="price-row">
-                          <span class="price-label">Discount Price:</span>
-                          <span class="price-value discount-price">₹{{ product.discount_price }}</span>
-                        </div>
+                      <div class="price-row">
+                        <span class="price-label">
+                          <i class="bi bi-percent"></i>
+                          Discount Price:
+                        </span>
+                        <span class="price-value discount-price"
+                          >₹{{ product.discount_price }}</span
+                        >
+                      </div>
                       {% endif %}
                     </div>
-                    
+
                     <div class="stock-section">
                       <div class="stock-row">
-                        <span class="price-label">Stock:</span>
-                        <span class="price-value">{{ product.stock_quantity }} {{ product.unit }}</span>
+                        <span class="price-label">
+                          <i class="bi bi-box"></i>
+                          Stock:
+                        </span>
+                        <span class="price-value"
+                          >{{ product.stock_quantity }} {{ product.unit }}</span
+                        >
                       </div>
                       <div class="stock-row">
-                        <span class="price-label">Min Order:</span>
-                        <span class="price-value">{{ product.min_order_quantity }} {{ product.unit }}</span>
+                        <span class="price-label">
+                          <i class="bi bi-cart-check"></i>
+                          Min Order:
+                        </span>
+                        <span class="price-value"
+                          >{{ product.min_order_quantity }} {{ product.unit}}</span>
                       </div>
                     </div>
-                    
+
                     {% if product.rating > 0 %}
-                      <div class="rating-section">
-                        Rating: {{ product.rating }}/5 ⭐
-                      </div>
+                    <div class="rating-section">
+                      <i class="bi bi-star-fill"></i>
+                      Rating: {{ product.rating }}/5
+                    </div>
                     {% endif %}
-                    
+
                     <div class="product-actions">
-                      <a href="{% url 'products:product_detail' product.id %}" class="btn btn-info btn-sm">
+                      <a
+                        href="{% url 'products:product_detail' product.id %}"
+                        class="btn btn-info btn-sm"
+                      >
+                        <i class="bi bi-eye"></i>
                         View Details
                       </a>
-                      <a href="{% url 'products:update_product' product.id %}" class="btn btn-primary btn-sm">
+                      <a
+                        href="{% url 'products:update_product' product.id %}"
+                        class="btn btn-primary btn-sm"
+                      >
+                        <i class="bi bi-pencil"></i>
                         Edit
                       </a>
-                      <a href="{% url 'products:delete_product' product.id %}" class="btn btn-outline-danger btn-sm">
+                      <a
+                        href="{% url 'products:delete_product' product.id %}"
+                        class="btn btn-outline-danger btn-sm"
+                      >
+                        <i class="bi bi-trash"></i>
                         Delete
                       </a>
                     </div>
                   </div>
+                </div>
                 {% endfor %}
               </div>
 
-            {% else %}
+              {% else %}
               <div class="no-products">
                 <h3>No Products Found</h3>
-                <p>You haven't added any products yet. Start building your inventory!</p>
-                <a href="{% url 'products:create_product' %}" class="btn btn-success btn-lg">
+                <p>
+                  You haven't added any products yet. Start building your
+                  inventory!
+                </p>
+                <a
+                  href="{% url 'products:create_product' %}"
+                  class="btn btn-success btn-lg"
+                >
+                  <i class="bi bi-plus-circle me-2"></i>
                   Add Your First Product
                 </a>
               </div>
-            {% endif %}
-          </div>
-
-          <!-- Leads Tab -->
-          <div class="tab-pane fade" id="leads" role="tabpanel">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-              <h4>All Platform Leads ({{ total_leads|default:0 }})</h4>
-              <div>
-                <span class="badge bg-info">Updated in Real-time</span>
-              </div>
+              {% endif %}
             </div>
 
-            {% if leads %}
+            <!-- Leads Tab -->
+            <div class="tab-pane fade" id="leads" role="tabpanel">
+              <div
+                class="d-flex justify-content-between align-items-center mb-4"
+              >
+                <h4 class="mb-0">
+                  <i class="bi bi-people me-2"></i>
+                  All Platform Leads ({{ total_leads|default:0 }})
+                </h4>
+                <div>
+                  <span class="badge bg-info">
+                    <i class="bi bi-lightning me-1"></i>
+                    Updated in Real-time
+                  </span>
+                </div>
+              </div>
+
+              {% if leads %}
               <div class="row">
                 {% for lead in leads %}
-                  <div class="col-lg-6 col-xl-4 mb-3">
-                    <div class="lead-card">
-                      <div class="lead-header">
-                        <div class="lead-user">
-                          {% if lead.user %}
-                            {{ lead.user.first_name }} {{ lead.user.last_name }}
-                            <small class="text-muted">({{ lead.user.email }})</small>
-                          {% else %}
-                            <span class="anonymous-user">Anonymous User</span>
-                          {% endif %}
-                        </div>
-                        <div class="lead-timestamp">
-                          {{ lead.timestamp|date:"M d, Y H:i" }}
-                        </div>
+                <div class="col-lg-6 col-xl-4 mb-3">
+                  <div class="lead-card">
+                    <div class="lead-header">
+                      <div class="lead-user">
+                        {% if lead.user %}
+                        <i class="bi bi-person-circle me-2"></i>
+                        {{ lead.user.first_name }} {{ lead.user.last_name }}
+                        <small class="d-block text-muted mt-1">{{ lead.user.email }}</small>
+                        {% else %}
+                        <span class="anonymous-user">
+                          <i class="bi bi-person-x me-1"></i>
+                          Anonymous User
+                        </span>
+                        {% endif %}
                       </div>
-                      
-                      <div class="lead-product">
-                        📦 {{ lead.product.name }}
-                      </div>
-                      
-                      <div class="lead-vendor">
-                        🏪 Vendor: {{ lead.product.vendor.business_name }}
-                      </div>
-                      
-                      <div class="mt-2">
-                        <small class="text-muted">
-                          Category: {{ lead.product.category }} | 
-                          Price: ₹{{ lead.product.price_retail }}
-                        </small>
-                      </div>
-
-                      <div class="mt-2">
-                        <a href="{% url 'products:product_detail' lead.product.id %}" class="btn btn-outline-primary btn-sm">
-                          View Product
-                        </a>
+                      <div class="lead-timestamp">
+                        <i class="bi bi-clock me-1"></i>
+                        {{ lead.timestamp|date:"M d, Y H:i" }}
                       </div>
                     </div>
+
+                    <div class="lead-product">
+                      <i class="bi bi-box me-1"></i>
+                      {{ lead.product.name }}
+                    </div>
+
+                    <div class="lead-vendor">
+                      <i class="bi bi-shop me-1"></i>
+                      Vendor: {{ lead.product.vendor.business_name }}
+                    </div>
+
+                    <div class="mt-2">
+                      <small class="text-muted">
+                        <i class="bi bi-tag me-1"></i>
+                        Category: {{ lead.product.category }} |
+                        <i class="bi bi-currency-rupee me-1"></i>
+                        Price: ₹{{ lead.product.price_retail }}
+                      </small>
+                    </div>
+
+                    <div class="mt-3">
+                      <a
+                        href="{% url 'products:product_detail' lead.product.id %}"
+                        class="btn btn-outline-primary btn-sm"
+                      >
+                        <i class="bi bi-eye me-1"></i>
+                        View Product
+                      </a>
+                    </div>
                   </div>
+                </div>
                 {% endfor %}
               </div>
-            {% else %}
+              {% else %}
               <div class="no-products">
                 <h3>No Leads Yet</h3>
-                <p>No users have viewed product details yet. Leads will appear here when users click "View Details" on any product.</p>
+                <p>
+                  No users have viewed product details yet. Leads will appear
+                  here when users click "View Details" on any product.
+                </p>
               </div>
-            {% endif %}
+              {% endif %}
+            </div>
           </div>
 
-        </div>
-
-        <!-- Quick Stats Section -->
-        {% if products %}
+          <!-- Quick Stats Section -->
+          {% if products %}
           <div class="row mt-5">
-            <div class="col-md-3">
-              <div class="card text-center">
+            <div class="col-md-3 mb-4">
+              <div class="stats-card">
                 <div class="card-body">
                   <h5 class="card-title">{{ products|length }}</h5>
-                  <p class="card-text">Total Products</p>
+                  <p class="card-text">
+                    <i class="bi bi-box-seam me-1"></i>
+                    Total Products
+                  </p>
                 </div>
               </div>
             </div>
-            <div class="col-md-3">
-              <div class="card text-center">
+            <div class="col-md-3 mb-4">
+              <div class="stats-card">
                 <div class="card-body">
                   <h5 class="card-title">{{ products|length }}</h5>
-                  <p class="card-text">Active Listings</p>
+                  <p class="card-text">
+                    <i class="bi bi-check-circle me-1"></i>
+                    Active Listings
+                  </p>
                 </div>
               </div>
             </div>
-            <div class="col-md-3">
-              <div class="card text-center">
+            <div class="col-md-3 mb-4">
+              <div class="stats-card">
                 <div class="card-body">
                   <h5 class="card-title">{{ total_leads|default:0 }}</h5>
-                  <p class="card-text">Total Leads</p>
+                  <p class="card-text">
+                    <i class="bi bi-people me-1"></i>
+                    Total Leads
+                  </p>
                 </div>
               </div>
             </div>
-            <div class="col-md-3">
-              <div class="card text-center">
+            <div class="col-md-3 mb-4">
+              <div class="stats-card">
                 <div class="card-body">
                   <h5 class="card-title">-</h5>
-                  <p class="card-text">Revenue</p>
+                  <p class="card-text">
+                    <i class="bi bi-graph-up me-1"></i>
+                    Revenue
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-        {% endif %}
-
-      </main>
+          {% endif %}
+        </main>
+      </div>
     </div>
-  </div>
 
-  <!-- Bootstrap JS Bundle CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
-  <script>
-    function showLeadsTab() {
-      // Switch to leads tab when sidebar link is clicked
-      var leadsTab = new bootstrap.Tab(document.getElementById('leads-tab'));
-      leadsTab.show();
-    }
-  </script>
-</body>
+    <!-- Bootstrap JS Bundle CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      function showLeadsTab() {
+        // Switch to leads tab when sidebar link is clicked
+        var leadsTab = new bootstrap.Tab(document.getElementById("leads-tab"));
+        leadsTab.show();
+      }
+
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("show");
+      }
+
+      // Close sidebar when clicking outside on mobile
+      document.addEventListener("click", function (event) {
+        const sidebar = document.getElementById("sidebar");
+        const toggleBtn = document.querySelector(".navbar-toggler");
+
+        if (window.innerWidth <= 768) {
+          if (
+            !sidebar.contains(event.target) &&
+            !toggleBtn.contains(event.target)
+          ) {
+            sidebar.classList.remove("show");
+          }
+        }
+      });
+
+      // Add smooth scrolling
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Add loading animation for images
+      document.querySelectorAll(".product-image").forEach((img) => {
+        img.addEventListener("load", function () {
+          this.style.opacity = "1";
+        });
+
+        img.addEventListener("error", function () {
+          this.parentElement.innerHTML =
+            '<i class="bi bi-image placeholder-icon"></i>';
+        });
+      });
+
+      // Add ripple effect to buttons
+      document.querySelectorAll(".btn").forEach((button) => {
+        button.addEventListener("click", function (e) {
+          const ripple = document.createElement("span");
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          const x = e.clientX - rect.left - size / 2;
+          const y = e.clientY - rect.top - size / 2;
+
+          ripple.style.width = ripple.style.height = size + "px";
+          ripple.style.left = x + "px";
+          ripple.style.top = y + "px";
+          ripple.classList.add("ripple");
+
+          this.appendChild(ripple);
+
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      });
+
+      // Add CSS for ripple effect
+      const style = document.createElement("style");
+      style.textContent = `
+      .btn {
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        transform: scale(0);
+        animation: ripple-animation 0.6s linear;
+        pointer-events: none;
+      }
+      
+      @keyframes ripple-animation {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    `;
+      document.head.appendChild(style);
+    </script>
+  </body>
 </html>

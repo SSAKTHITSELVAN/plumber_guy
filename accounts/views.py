@@ -69,7 +69,7 @@ def profile_view(request):
         form = ProfileForm(instance=profile)
     
     # If it's a new profile (no phone number) or edit mode requested, show form
-    if not profile.phone_number or edit_mode:
+    if not profile.phone_number or edit_mode: # changed that removed not phone number check
         return render(request, 'registration/profile_form.html', {'form': form})
     else:
         # Show profile display

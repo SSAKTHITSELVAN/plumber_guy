@@ -9,155 +9,413 @@
         padding: 0;
         box-sizing: border-box;
     }
-    
+
     body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-        color: #333;
+        font-family: "Poppins", sans-serif;
+        background-color: #f8f9fa;
+        color: var(--text-dark);
         line-height: 1.6;
     }
     
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
     
     .profile-header {
         text-align: center;
-        padding-bottom: 20px;
-        border-bottom: 2px solid #eee;
-        margin-bottom: 30px;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+    
+    .profile-header::before {
+        content: '';
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, #4299e1, #667eea);
+        border-radius: 2px;
     }
     
     .profile-header h1 {
-        color: #2c3e50;
-        margin-bottom: 10px;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: rgb(18, 17, 17);
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .profile-header p {
+        font-size: 1.1rem;
+        color: rgba(14, 14, 14, 0.9);
+        font-weight: 400;
+    }
+    
+    .profile-content {
+        display: grid;
+        gap: 2rem;
+        margin-bottom: 2rem;
     }
     
     .profile-info {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 30px;
-        margin-bottom: 30px;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
     }
     
     .info-section {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 6px;
-        border-left: 4px solid #3498db;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 2rem;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .info-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #4299e1, #667eea, #764ba2);
+        border-radius: 20px 20px 0 0;
+    }
+    
+    .info-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     }
     
     .info-section h3 {
-        color: #2c3e50;
-        margin-bottom: 15px;
-        font-size: 18px;
+        color: #2d3748;
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .info-section h3::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        background: linear-gradient(45deg, #4299e1, #667eea);
+        border-radius: 50%;
     }
     
     .info-item {
-        margin-bottom: 12px;
+        margin-bottom: 1rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.2s ease;
+    }
+    
+    .info-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+    
+    .info-item:hover {
+        background: rgba(66, 153, 225, 0.05);
+        border-radius: 8px;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
     
     .info-label {
-        font-weight: bold;
-        color: #555;
-        display: inline-block;
-        width: 120px;
+        font-weight: 600;
+        color: #4a5568;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
     .info-value {
-        color: #333;
+        color: #2d3748;
+        font-weight: 500;
+        text-align: right;
     }
     
     .stats-section {
-        background: #ecf0f1;
-        padding: 20px;
-        border-radius: 6px;
-        margin-bottom: 20px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 2rem;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stats-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+        border-radius: 20px 20px 0 0;
+    }
+    
+    .stats-section h3 {
+        margin-bottom: 2rem;
+        color: #2d3748;
+        font-size: 1.3rem;
+        font-weight: 600;
+        text-align: center;
     }
     
     .stats-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 15px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
     }
     
     .stat-card {
-        background: white;
-        padding: 15px;
-        border-radius: 6px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+        backdrop-filter: blur(10px);
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
         text-align: center;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #4299e1, #667eea);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 35px rgba(66, 153, 225, 0.2);
+    }
+    
+    .stat-card:hover::before {
+        transform: scaleX(1);
     }
     
     .stat-number {
-        font-size: 24px;
-        font-weight: bold;
-        color: #3498db;
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #4299e1, #667eea);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+        line-height: 1;
     }
     
     .stat-label {
-        color: #666;
-        font-size: 14px;
-        margin-top: 5px;
+        color: #4a5568;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
     .buttons {
         text-align: center;
-        margin-top: 30px;
+        margin-top: 3rem;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
     }
     
     .btn {
-        display: inline-block;
-        padding: 12px 24px;
-        margin: 0 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
         text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background-color 0.3s;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        min-width: 160px;
+        justify-content: center;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+    
+    .btn:hover::before {
+        left: 100%;
     }
     
     .btn-primary {
-        background-color: #3498db;
+        background: linear-gradient(135deg, #4299e1, #667eea);
         color: white;
+        box-shadow: 0 4px 15px rgba(66, 153, 225, 0.3);
     }
     
     .btn-primary:hover {
-        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(66, 153, 225, 0.4);
     }
     
     .btn-secondary {
-        background-color: #95a5a6;
+        background: linear-gradient(135deg, #718096, #4a5568);
         color: white;
+        box-shadow: 0 4px 15px rgba(113, 128, 150, 0.3);
     }
     
     .btn-secondary:hover {
-        background-color: #7f8c8d;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(113, 128, 150, 0.4);
     }
     
     .status-badge {
-        display: inline-block;
-        padding: 4px 8px;
-        border-radius: 12px;
-        font-size: 12px;
-        font-weight: bold;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .status-badge::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
     }
     
     .verified {
-        background-color: #2ecc71;
+        background: linear-gradient(135deg, #48bb78, #38a169);
         color: white;
+        box-shadow: 0 2px 8px rgba(72, 187, 120, 0.3);
+    }
+    
+    .verified::before {
+        background: rgba(255, 255, 255, 0.8);
     }
     
     .unverified {
-        background-color: #e74c3c;
+        background: linear-gradient(135deg, #f56565, #e53e3e);
         color: white;
+        box-shadow: 0 2px 8px rgba(245, 101, 101, 0.3);
     }
     
+    .unverified::before {
+        background: rgba(255, 255, 255, 0.8);
+    }
+    
+    /* Responsive Design */
     @media (max-width: 768px) {
+        .container {
+            padding: 1rem;
+        }
+        
         .profile-info {
             grid-template-columns: 1fr;
         }
         
-        .container {
-            margin: 10px;
-            padding: 15px;
+        .profile-header h1 {
+            font-size: 2rem;
         }
+        
+        .info-section,
+        .stats-section {
+            padding: 1.5rem;
+        }
+        
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .btn {
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .info-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .info-value {
+            text-align: left;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+        }
+    }
+    
+    /* Loading Animation */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .info-section,
+    .stats-section {
+        animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    .info-section:nth-child(2) {
+        animation-delay: 0.1s;
+    }
+    
+    .stats-section {
+        animation-delay: 0.2s;
     }
 </style>
 
@@ -167,77 +425,59 @@
         <p>Welcome back, {{ user.first_name|default:user.username }}!</p>
     </div>
     
-    <div class="profile-info">
-        <div class="info-section">
-            <h3>Personal Information</h3>
-            <div class="info-item">
-                <span class="info-label">Name:</span>
-                <span class="info-value">{{ user.username }}</span>
+    <div class="profile-content">
+        <div class="profile-info">
+            <div class="info-section">
+                <h3>Personal Information</h3>
+                <div class="info-item">
+                    <span class="info-label">Name</span>
+                    <span class="info-value">{{ user.username }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Email</span>
+                    <span class="info-value">{{ user.email|default:"Not provided" }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Phone</span>
+                    <span class="info-value">{{ profile.phone_number|default:"Not provided" }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Phone Status</span>
+                    <span class="info-value">
+                        {% if profile.phone_verified %}
+                            <span class="status-badge verified">Verified</span>
+                        {% else %}
+                            <span class="status-badge unverified">Not Verified</span>
+                        {% endif %}
+                    </span>
+                </div>
             </div>
-            <div class="info-item">
-                <span class="info-label">Email:</span>
-                <span class="info-value">{{ user.email|default:"Not provided" }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Phone:</span>
-                <span class="info-value">{{ profile.phone_number|default:"Not provided" }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Phone Status:</span>
-                {% if profile.phone_verified %}
-                    <span class="status-badge verified">Verified</span>
-                {% else %}
-                    <span class="status-badge unverified">Not Verified</span>
-                {% endif %}
-            </div>
-        </div>
-        
-        <div class="info-section">
-            <h3>Account Details</h3>
-            <div class="info-item">
-                <span class="info-label">Gender:</span>
-                <span class="info-value">{{ profile.get_gender_display|default:"Not specified" }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Date of Birth:</span>
-                <span class="info-value">{{ profile.date_of_birth|default:"Not provided" }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Member Since:</span>
-                <span class="info-value">{{ user.date_joined|date:"F Y" }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Last Login:</span>
-                <span class="info-value">{{ user.last_login|date:"M d, Y"|default:"Never" }}</span>
-            </div>
-        </div>
-    </div>
-    
-    <div class="stats-section">
-        <h3 style="margin-bottom: 20px; color: #2c3e50;">Account Statistics</h3>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">12</div>
-                <div class="stat-label">Total Orders</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">3</div>
-                <div class="stat-label">Saved Cards</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">8</div>
-                <div class="stat-label">Wishlist Items</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">5</div>
-                <div class="stat-label">Addresses</div>
+            
+            <div class="info-section">
+                <h3>Account Details</h3>
+                <div class="info-item">
+                    <span class="info-label">Gender</span>
+                    <span class="info-value">{{ profile.get_gender_display|default:"Not specified" }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Date of Birth</span>
+                    <span class="info-value">{{ profile.date_of_birth|default:"Not provided" }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Member Since</span>
+                    <span class="info-value">{{ user.date_joined|date:"F Y" }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Last Login</span>
+                    <span class="info-value">{{ user.last_login|date:"M d, Y"|default:"Never" }}</span>
+                </div>
             </div>
         </div>
-    </div>
-    
+            
     <div class="buttons">
         <a href="{% url 'accounts:profile' %}" class="btn btn-primary">Edit Profile</a>
         <a href="{% url 'accounts:dashboard' %}" class="btn btn-secondary">Dashboard</a>
     </div>
+</div>
 </div>
 {% endblock %}

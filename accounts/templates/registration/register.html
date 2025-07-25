@@ -1,21 +1,675 @@
+<!-- registration/templates/registration/register.html -->
 {% extends 'registration/base.html' %}
 
 {% block content %}
-<div class="form-container">
+<style>
+:root {
+  --primary-blue: #1e3a8a;
+  --primary-blue-hover: #1e40af;
+  --secondary-blue: #3b82f6;
+  --light-blue: #60a5fa;
+  --dark-blue-text: #1e3a8a;
+  --light-text: #f8fafc;
+  --error-red: #dc2626;
+  --border-color: rgba(59, 130, 246, 0.3);
+  --background-blue: rgba(30, 58, 138, 0.1);
+  --success-green: #059669;
+  --warning-orange: #d97706;
+  --glass-blue: rgba(59, 130, 246, 0.1);
+  --glass-border: rgba(147, 197, 253, 0.2);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: linear-gradient(135deg, 
+              rgba(30, 58, 138, 0.8) 0%,
+              rgba(59, 130, 246, 0.6) 25%,
+              rgba(96, 165, 250, 0.4) 50%,
+              rgba(147, 197, 253, 0.6) 75%,
+              rgba(30, 58, 138, 0.8) 100%),
+              url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="blueGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:%23dbeafe;stop-opacity:0.3" /><stop offset="50%" style="stop-color:%233b82f6;stop-opacity:0.2" /><stop offset="100%" style="stop-color:%231e3a8a;stop-opacity:0.4" /></radialGradient><pattern id="bluePattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="30" fill="rgba(59,130,246,0.1)"/></pattern></defs><rect width="1000" height="1000" fill="url(%23blueGrad)"/><rect width="1000" height="1000" fill="url(%23bluePattern)"/><g opacity="0.15"><circle cx="150" cy="150" r="80" fill="%23dbeafe"/><circle cx="850" cy="200" r="120" fill="%2393c5fd"/><circle cx="200" cy="800" r="100" fill="%2360a5fa"/><circle cx="800" cy="750" r="90" fill="%233b82f6"/><circle cx="500" cy="400" r="150" fill="%236366f1"/></g></svg>');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.registration-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.form-container {
+  background: linear-gradient(145deg, 
+              rgba(59, 130, 246, 0.15) 0%,
+              rgba(147, 197, 253, 0.08) 50%,
+              rgba(30, 58, 138, 0.12) 100%);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 2px solid var(--glass-border);
+  padding: 40px 45px;
+  border-radius: 25px;
+  box-shadow: 0 20px 40px rgba(30, 58, 138, 0.15), 
+              0 8px 25px rgba(59, 130, 246, 0.1),
+              inset 0 1px 0 rgba(147, 197, 253, 0.2),
+              inset 0 -1px 0 rgba(30, 58, 138, 0.1);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  border-top: 6px solid var(--secondary-blue);
+  position: relative;
+  min-width: 300px;
+}
+
+.form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+              rgba(59, 130, 246, 0.05) 0%,
+              transparent 50%,
+              rgba(147, 197, 253, 0.03) 100%);
+  border-radius: 25px;
+  pointer-events: none;
+}
+
+.form-container h2 {
+  margin-bottom: 30px;
+  color: var(--dark-blue-text);
+  font-size: 28px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(147, 197, 253, 0.3);
+  background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.messages {
+  padding: 15px;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, 
+              rgba(220, 38, 38, 0.1) 0%,
+              rgba(239, 68, 68, 0.05) 100%);
+  color: var(--error-red);
+  border: 2px solid rgba(220, 38, 38, 0.2);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.1);
+}
+
+form p {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--dark-blue-text);
+  text-shadow: 0 1px 2px rgba(147, 197, 253, 0.2);
+  font-size: 16px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid var(--border-color);
+  background: linear-gradient(145deg, 
+              rgba(147, 197, 253, 0.1) 0%,
+              rgba(219, 234, 254, 0.05) 100%);
+  backdrop-filter: blur(15px);
+  border-radius: 12px;
+  font-size: 16px;
+  color: var(--dark-blue-text);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+form input[type="text"]::placeholder,
+form input[type="email"]::placeholder,
+form input[type="password"]::placeholder {
+  color: rgba(30, 58, 138, 0.5);
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus {
+  outline: none;
+  border-color: var(--secondary-blue);
+  background: linear-gradient(145deg, 
+              rgba(147, 197, 253, 0.2) 0%,
+              rgba(219, 234, 254, 0.1) 100%);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15),
+              0 8px 25px rgba(30, 58, 138, 0.1),
+              inset 0 1px 0 rgba(147, 197, 253, 0.2);
+  transform: translateY(-3px);
+}
+
+.password-strength-container {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.password-strength-text {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  text-align: left;
+  color: var(--dark-blue-text);
+}
+
+.password-strength-bar {
+  height: 10px;
+  width: 100%;
+  background: rgba(147, 197, 253, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.password-strength-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 6px;
+  transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+.strength-weak {
+  background: linear-gradient(90deg, var(--error-red), #ef4444);
+}
+
+.strength-medium {
+  background: linear-gradient(90deg, var(--warning-orange), #f59e0b);
+}
+
+.strength-strong {
+  background: linear-gradient(90deg, var(--success-green), #10b981);
+}
+
+.text-weak { 
+  color: var(--error-red); 
+}
+
+.text-medium { 
+  color: var(--warning-orange); 
+}
+
+.text-strong { 
+  color: var(--success-green); 
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, 
+              var(--primary-blue) 0%,
+              var(--secondary-blue) 50%,
+              var(--light-blue) 100%);
+  color: var(--light-text);
+  border: none;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px rgba(30, 58, 138, 0.3),
+              0 4px 10px rgba(59, 130, 246, 0.2),
+              inset 0 1px 0 rgba(147, 197, 253, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+              transparent, 
+              rgba(255, 255, 255, 0.2), 
+              transparent);
+  transition: left 0.6s;
+}
+
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, 
+              var(--primary-blue-hover) 0%,
+              var(--primary-blue) 50%,
+              var(--secondary-blue) 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(30, 58, 138, 0.4),
+              0 6px 15px rgba(59, 130, 246, 0.3),
+              inset 0 1px 0 rgba(147, 197, 253, 0.3);
+}
+
+button[type="submit"]:hover::before {
+  left: 100%;
+}
+
+button[type="submit"]:active {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(30, 58, 138, 0.3);
+}
+
+.login-link {
+  margin-top: 30px;
+  font-size: 16px;
+  color: var(--dark-blue-text);
+  text-shadow: 0 1px 2px rgba(147, 197, 253, 0.2);
+}
+
+.login-link a {
+  color: var(--secondary-blue);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.login-link a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 50%;
+  background: linear-gradient(90deg, var(--secondary-blue), var(--light-blue));
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.login-link a:hover {
+  color: var(--light-blue);
+  text-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.login-link a:hover::after {
+  width: 100%;
+}
+
+/* Responsive Design */
+@media (min-width: 1201px) {
+  .form-container {
+    max-width: 520px;
+    padding: 50px 50px;
+  }
+  
+  .form-container h2 {
+    font-size: 30px;
+  }
+  
+  form label {
+    font-size: 17px;
+  }
+  
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="password"] {
+    padding: 16px 20px;
+    font-size: 18px;
+  }
+  
+  button[type="submit"] {
+    padding: 20px;
+    font-size: 19px;
+  }
+  
+  .login-link {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 992px) {
+  .form-container {
+    max-width: 440px;
+    padding: 40px 35px;
+  }
+  
+  .form-container h2 {
+    font-size: 26px;
+  }
+  
+  form p {
+    margin-bottom: 22px;
+  }
+  
+  form label {
+    font-size: 15px;
+  }
+  
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="password"] {
+    padding: 14px 16px;
+    font-size: 16px;
+  }
+  
+  button[type="submit"] {
+    padding: 16px;
+    font-size: 17px;
+  }
+  
+  .login-link {
+    font-size: 15px;
+  }
+  
+  .messages {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+  
+  .registration-page-wrapper {
+    padding: 10px;
+  }
+
+  .form-container {
+    width: 90%;
+    max-width: 380px;
+    padding: 25px 20px;
+    border-radius: 20px;
+    margin: auto;
+  }
+
+  .form-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  form p {
+    margin-bottom: 18px;
+  }
+
+  form label {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="password"] {
+    padding: 12px 14px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+
+  button[type="submit"] {
+    padding: 14px;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 12px;
+  }
+
+  .login-link {
+    font-size: 14px;
+    margin-top: 20px;
+  }
+
+  .messages {
+    font-size: 13px;
+    padding: 12px;
+  }
+
+  .password-strength-text {
+    font-size: 13px;
+  }
+
+  .password-strength-bar {
+    height: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .registration-page-wrapper {
+    padding: 5px;
+  }
+  
+  .form-container {
+    width: 95%;
+    max-width: none;
+    padding: 20px 15px;
+    border-radius: 15px;
+  }
+
+  .form-container h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  form p {
+    margin-bottom: 15px;
+  }
+
+  form label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="password"] {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  button[type="submit"] {
+    padding: 12px;
+    font-size: 15px;
+    margin-top: 8px;
+  }
+
+  .login-link {
+    font-size: 13px;
+    margin-top: 15px;
+  }
+
+  .messages {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .password-strength-text {
+    font-size: 12px;
+  }
+
+  .password-strength-bar {
+    height: 6px;
+  }
+}
+</style>
+
+<div class="registration-page-wrapper">
+  <div class="form-container">
     <h2>Register</h2>
     
     {% if messages %}
-        {% for message in messages %}
-            <div class="messages">{{ message }}</div>
-        {% endfor %}
+      {% for message in messages %}
+        <div class="messages">{{ message }}</div>
+      {% endfor %}
     {% endif %}
     
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
+    <form method="post" id="registration-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Register</button>
     </form>
     
-    <p><a href="{% url 'accounts:login' %}">Already have an account? Login here</a></p>
+    <p class="login-link">
+      <a href="{% url 'accounts:login' %}">Already have an account? Login here</a>
+    </p>
+  </div>
 </div>
+
+<script>
+class PasswordStrengthChecker {
+  constructor() {
+    this.passwordInput = null;
+    this.strengthContainer = null;
+    this.strengthLabel = null;
+    this.strengthFill = null;
+    
+    this.criteria = {
+      length: { min: 8, message: '8+ Characters' },
+      uppercase: { regex: /[A-Z]/, message: 'Uppercase' },
+      number: { regex: /[0-9]/, message: 'Number' },
+      special: { regex: /[^A-Za-z0-9]/, message: 'Special Char' }
+    };
+  }
+
+  init() {
+    this.passwordInput = document.querySelector('input[type="password"][name="password1"]');
+    
+    if (!this.passwordInput) {
+      console.error('Password input field with name "password1" not found.');
+      return false;
+    }
+
+    this.createStrengthIndicator();
+    this.bindEvents();
+    return true;
+  }
+
+  createStrengthIndicator() {
+    this.strengthContainer = document.createElement('div');
+    this.strengthContainer.className = 'password-strength-container';
+    this.strengthContainer.innerHTML = `
+      <div class="password-strength-text">
+        Password Strength: <span class="strength-label">None</span>
+      </div>
+      <div class="password-strength-bar">
+        <div class="password-strength-fill"></div>
+      </div>
+    `;
+
+    this.passwordInput.parentNode.insertBefore(
+      this.strengthContainer, 
+      this.passwordInput.nextSibling
+    );
+
+    this.strengthLabel = this.strengthContainer.querySelector('.strength-label');
+    this.strengthFill = this.strengthContainer.querySelector('.password-strength-fill');
+  }
+
+  bindEvents() {
+    this.passwordInput.addEventListener('input', () => {
+      this.updateStrengthIndicator();
+    });
+  }
+
+  checkPassword(password) {
+    if (!password) {
+      return {
+        strength: 0,
+        level: 'None',
+        levelClass: '',
+        textClass: '',
+        width: 0
+      };
+    }
+
+    let strength = 0;
+    const metCriteria = [];
+
+    if (password.length >= this.criteria.length.min) {
+      strength++;
+      metCriteria.push(this.criteria.length.message);
+    }
+
+    if (this.criteria.uppercase.regex.test(password)) {
+      strength++;
+      metCriteria.push(this.criteria.uppercase.message);
+    }
+
+    if (this.criteria.number.regex.test(password)) {
+      strength++;
+      metCriteria.push(this.criteria.number.message);
+    }
+
+    if (this.criteria.special.regex.test(password)) {
+      metCriteria.push(this.criteria.special.message);
+    }
+
+    const { level, levelClass, textClass } = this.getStrengthLevel(strength);
+    const width = Math.min((metCriteria.length / 4) * 100, 100);
+
+    return {
+      strength,
+      level,
+      levelClass,
+      textClass,
+      width,
+      metCriteria
+    };
+  }
+
+  getStrengthLevel(strength) {
+    if (strength < 2) {
+      return {
+        level: 'Weak',
+        levelClass: 'strength-weak',
+        textClass: 'text-weak'
+      };
+    } else if (strength < 3) {
+      return {
+        level: 'Medium',
+        levelClass: 'strength-medium',
+        textClass: 'text-medium'
+      };
+    } else {
+      return {
+        level: 'Strong',
+        levelClass: 'strength-strong',
+        textClass: 'text-strong'
+      };
+    }
+  }
+
+  updateStrengthIndicator() {
+    const password = this.passwordInput.value;
+    const result = this.checkPassword(password);
+
+    this.strengthLabel.textContent = result.level;
+    this.strengthLabel.className = `strength-label ${result.textClass}`;
+
+    this.strengthFill.className = `password-strength-fill ${result.levelClass}`;
+    this.strengthFill.style.width = `${result.width}%`;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const passwordChecker = new PasswordStrengthChecker();
+  passwordChecker.init();
+});
+</script>
 {% endblock %}

@@ -2,27 +2,706 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Business Registration</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            --card-shadow-hover: 0 25px 50px rgba(0, 0, 0, 0.15);
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            color: #2d3748;
+            line-height: 1.6;
+            padding: 20px 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background elements */
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            width: 120px;
+            height: 120px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 80px;
+            height: 80px;
+            top: 70%;
+            right: 20%;
+            animation-delay: 2s;
+        }
+
+        .shape-3 {
+            width: 60px;
+            height: 60px;
+            bottom: 10%;
+            left: 80%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .registration-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* Left side - Hero section */
+        .hero-section {
+            position: sticky;
+            top: 40px;
+        }
+
+        .hero-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .hero-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .hero-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            color: white;
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 16px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #718096;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            text-align: left;
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            background: rgba(102, 126, 234, 0.15);
+            transform: translateX(5px);
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--success-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        /* Right side - Form section */
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .form-container:hover {
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .form-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            color: #718096;
+            font-size: 1rem;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            margin: 24px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-gradient);
+            width: 60%;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        /* Enhanced form fields - Target Django form inputs directly */
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        /* Target all Django form inputs and select elements */
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="password"],
+        form input[type="date"],
+        form input[type="tel"],
+        form input[type="url"],
+        form input[type="number"],
+        form select,
+        form textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        form input:focus,
+        form select:focus,
+        form textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        form input:valid,
+        form select:valid,
+        form textarea:valid {
+            border-color: #38a169;
+        }
+
+        /* Style for inputs that have icons */
+        .input-wrapper input {
+            padding-right: 50px;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        form input:focus ~ .input-icon {
+            color: #667eea;
+        }
+
+        /* Image upload area */
+        .image-upload-area {
+            border: 2px dashed #e2e8f0;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            background: rgba(247, 250, 252, 0.5);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .image-upload-area:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .upload-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .upload-text {
+            color: #4a5568;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .upload-subtext {
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Enhanced messages */
+        .messages {
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            border-radius: 12px;
+            border-left: 4px solid;
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .alert-success {
+            background: rgba(56, 161, 105, 0.1);
+            border-left-color: #38a169;
+            color: #2f855a;
+        }
+
+        .alert-error {
+            background: rgba(245, 101, 101, 0.1);
+            border-left-color: #f56565;
+            color: #c53030;
+        }
+
+        /* Enhanced button */
+        .submit-btn {
+            width: 100%;
+            padding: 18px 24px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            margin-top: 32px;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Back link */
+        .back-link {
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-link a:hover {
+            color: #764ba2;
+            transform: translateX(-3px);
+        }
+
+        /* Help text */
+        .helptext {
+            font-size: 0.85rem;
+            color: #a0aec0;
+            margin-top: 6px;
+            display: block;
+        }
+
+        /* Error styling */
+        .errorlist {
+            color: #e53e3e;
+            font-size: 0.85rem;
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 0 0;
+        }
+
+        .errorlist li {
+            padding: 4px 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .registration-wrapper {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .hero-section {
+                position: static;
+                order: 2;
+            }
+            
+            .form-container {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 0 15px;
+            }
+            
+            .hero-card,
+            .form-container {
+                padding: 30px 20px;
+            }
+            
+            .hero-title {
+                font-size: 1.5rem;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
-<body class="bg-light">
-<div class="container mt-5">
-    <h2 class="mb-4">Register Your Business</h2>
+<body>
+    <!-- Animated background -->
+    <div class="bg-decoration">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
 
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
+    <div class="main-container">
+        <div class="registration-wrapper">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <div class="hero-card">
+                    <div class="hero-icon">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <h1 class="hero-title">Start Your Business Journey</h1>
+                    <p class="hero-subtitle">Join thousands of successful businesses that started their journey with us. Simple, secure, and professional registration process.</p>
+                    
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <i class="bi bi-check"></i>
+                            </div>
+                            <span>Fast & Secure Registration</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <i class="bi bi-check"></i>
+                            </div>
+                            <span>Professional Business Profile</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <i class="bi bi-check"></i>
+                            </div>
+                            <span>24/7 Customer Support</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <i class="bi bi-check"></i>
+                            </div>
+                            <span>Advanced Analytics Dashboard</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-    <form method="POST" class="card p-4 bg-white shadow-sm">
-        {% csrf_token %}
-        {{ form.as_p }}
+            <!-- Form Section -->
+            <div class="form-container">
+                <div class="form-header">
+                    <h2 class="form-title">Register Your Business</h2>
+                    <p class="form-subtitle">Fill in the details below to get started</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
 
-        <button type="submit" class="btn btn-primary">Register Business</button>
-    </form>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} messages" role="alert">
+                            <i class="bi bi-info-circle me-2"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
 
-<a href="{% url 'accounts:dashboard' %}" class="btn btn-link mt-3">Back to Dashboard</a>
-</div>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <!-- Business Logo Upload -->
+                    <div class="form-group">
+                        <label class="form-label">Business Logo</label>
+                        <div class="image-upload-area" onclick="document.getElementById('logo-upload').click()">
+                            <div class="upload-icon">
+                                <i class="bi bi-cloud-upload"></i>
+                            </div>
+                            <div class="upload-text">Click to upload business logo</div>
+                            <div class="upload-subtext">PNG, JPG up to 10MB</div>
+                            <input type="file" id="logo-upload" style="display: none;" accept="image/*">
+                        </div>
+                    </div>
+
+                    <!-- Dynamic form fields -->
+                    {% for field in form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}" class="form-label">
+                                {{ field.label }}
+                                {% if field.field.required %}
+                                    <span style="color: #e53e3e;">*</span>
+                                {% endif %}
+                            </label>
+                            <div class="input-wrapper">
+                                {{ field }}
+                                {% if field.name == 'business_name' %}
+                                    <i class="bi bi-building input-icon"></i>
+                                {% elif field.name == 'email' %}
+                                    <i class="bi bi-envelope input-icon"></i>
+                                {% elif field.name == 'phone' %}
+                                    <i class="bi bi-telephone input-icon"></i>
+                                {% elif field.name == 'website' %}
+                                    <i class="bi bi-globe input-icon"></i>
+                                {% elif field.name == 'address' %}
+                                    <i class="bi bi-geo-alt input-icon"></i>
+                                {% endif %}
+                            </div>
+                            {% if field.help_text %}
+                                <div class="helptext">{{ field.help_text }}</div>
+                            {% endif %}
+                            {% if field.errors %}
+                                <ul class="errorlist">
+                                    {% for error in field.errors %}
+                                        <li><i class="bi bi-exclamation-circle me-1"></i>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    <button type="submit" class="submit-btn">
+                        <i class="bi bi-rocket-takeoff me-2"></i>
+                        Register Business
+                    </button>
+                </form>
+
+                <div class="back-link">
+                    <a href="{% url 'accounts:dashboard' %}">
+                        <i class="bi bi-arrow-left"></i>
+                        Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    
+    <script>
+        // Enhanced form interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Progress bar animation
+            const progressFill = document.querySelector('.progress-fill');
+            const formInputs = document.querySelectorAll('.form-control');
+            
+            function updateProgress() {
+                const filledInputs = Array.from(formInputs).filter(input => input.value.trim() !== '').length;
+                const progressPercent = (filledInputs / formInputs.length) * 100;
+                progressFill.style.width = progressPercent + '%';
+            }
+            
+            formInputs.forEach(input => {
+                input.addEventListener('input', updateProgress);
+            });
+            
+            // Initial progress calculation
+            updateProgress();
+            
+            // Logo upload preview
+            const logoUpload = document.getElementById('logo-upload');
+            const uploadArea = document.querySelector('.image-upload-area');
+            
+            if (logoUpload) {
+                logoUpload.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            uploadArea.innerHTML = `
+                                <img src="${e.target.result}" alt="Logo preview" style="max-width: 100px; max-height: 100px; border-radius: 8px; margin-bottom: 10px;">
+                                <div class="upload-text" style="color: #38a169;">Logo uploaded successfully!</div>
+                                <div class="upload-subtext">Click to change</div>
+                            `;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+            
+            // Form validation enhancement
+            const form = document.querySelector('form');
+            const submitBtn = document.querySelector('.submit-btn');
+            
+            if (form && submitBtn) {
+                form.addEventListener('submit', function(e) {
+                    submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Processing...';
+                    submitBtn.disabled = true;
+                });
+            }
+            
+            // Input focus animations
+            formInputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>

@@ -1,7 +1,365 @@
-<h3>Are you sure you want to delete "{{ product.name }}"?</h3>
+{% extends 'base.html' %}
+{% load static %}
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Delete</button>
-    <a href="{% url 'products:product_list' %}" class="btn btn-secondary">Cancel</a>
-</form>
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="row">
+                <!-- Main Confirmation Card -->
+                <div class="col-md-8 mb-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0 text-dark">
+                                <i class="fas fa-trash-alt me-2"></i>Delete Confirmation
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <!-- Warning Message -->
+                            <div class="alert alert-danger mb-4" role="alert">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-exclamation-circle me-3 text-danger fs-4"></i>
+                                    <div>
+                                        <h5 class="alert-heading mb-1">Are you absolutely sure?</h5>
+                                        <p class="mb-0">You are about to permanently delete this product. This action cannot be reversed.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Info -->
+                            <div class="product-info p-4 bg-light rounded mb-4">
+                                <h6 class="text-dark mb-3">
+                                    <i class="fas fa-box me-2"></i>Product to be deleted:
+                                </h6>
+                                <div class="d-flex align-items-center">
+                                    <div class="product-icon me-3">
+                                        {% if product.image %}
+                                            <img src="{{ product.image.url }}" alt="{{ product.name }}" 
+                                                 class="rounded-circle border" 
+                                                 style="width: 60px; height: 60px; object-fit: cover; object-position: center;">
+                                        {% else %}
+                                            <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center border" 
+                                                 style="width: 60px; height: 60px;">
+                                                <i class="fas fa-box text-white fa-lg"></i>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1 text-dark">"{{ product.name }}"</h5>
+                                        {% if product.category %}
+                                            <small class="text-muted">Category: {{ product.category }}</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Consequences List -->
+                            <div class="consequences mb-4">
+                                <h6 class="text-warning mb-3">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>What will happen:
+                                </h6>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2 p-2 rounded">
+                                        <i class="fas fa-times-circle text-danger me-2"></i>
+                                        <span class="text-dark">Product will be permanently removed from the system</span>
+                                    </li>
+                                    <li class="mb-2 p-2 rounded">
+                                        <i class="fas fa-times-circle text-danger me-2"></i>
+                                        <span class="text-dark">All product data will be lost forever</span>
+                                    </li>
+                                    <li class="mb-2 p-2 rounded">
+                                        <i class="fas fa-times-circle text-danger me-2"></i>
+                                        <span class="text-dark">Associated images and files will be deleted</span>
+                                    </li>
+                                    <li class="p-2 rounded">
+                                        <i class="fas fa-times-circle text-danger me-2"></i>
+                                        <span class="text-dark">This action cannot be undone</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Confirmation Form -->
+                            <form method="post" id="deleteForm" class="border-top pt-4">
+                                {% csrf_token %}
+                                
+                                <!-- Confirmation Checkbox -->
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" id="confirmDelete" required>
+                                    <label class="form-check-label fw-semibold text-dark" for="confirmDelete">
+                                        I understand that this action is permanent and cannot be undone
+                                    </label>
+                                </div>
+                                
+                                <!-- Action Buttons -->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a href="{% url 'products:product_list' %}" 
+                                       class="btn btn-outline-secondary btn-lg px-4">
+                                        <i class="fas fa-arrow-left me-2"></i>Cancel
+                                    </a>
+                                    <button type="submit" class="btn btn-danger btn-lg px-4" id="deleteButton" disabled>
+                                        <i class="fas fa-trash-alt me-2"></i>Delete Forever
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Safety Tips Card -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0 text-dark">
+                                <i class="fas fa-shield-alt me-2"></i>Safety Tips
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <!-- Alternative Actions -->
+                            <div class="mb-4">
+                                <h6 class="text-primary mb-3">
+                                    <i class="fas fa-lightbulb me-2"></i>Consider alternatives:
+                                </h6>
+                                <div class="d-grid gap-2">
+                                    <a href="{% url 'products:product_detail' product.pk %}" 
+                                       class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-eye me-2"></i>View Product
+                                    </a>
+                                    <a href="{% url 'products:update_product' product.pk %}" 
+                                       class="btn btn-outline-info btn-sm">
+                                        <i class="fas fa-edit me-2"></i>Edit Instead
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Safety Checklist -->
+                            <div class="safety-checklist">
+                                <h6 class="text-success mb-3">
+                                    <i class="fas fa-check-circle me-2"></i>Before deleting:
+                                </h6>
+                                <ul class="list-unstyled small">
+                                    <li class="mb-2 p-2 rounded">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        <span class="text-dark">Export any needed data</span>
+                                    </li>
+                                    <li class="mb-2 p-2 rounded">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        <span class="text-dark">Check for dependencies</span>
+                                    </li>
+                                    <li class="mb-2 p-2 rounded">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        <span class="text-dark">Inform relevant team members</span>
+                                    </li>
+                                    <li class="p-2 rounded">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        <span class="text-dark">Double-check product details</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Help Section -->
+                            <div class="mt-4 p-3 bg-light rounded">
+                                <h6 class="text-secondary mb-2">
+                                    <i class="fas fa-question-circle me-2"></i>Need Help?
+                                </h6>
+                                <p class="small text-muted mb-0">
+                                    Contact your system administrator if you're unsure about deleting this product.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Card Styling */
+.card {
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+.card-header {
+    border-radius: 12px 12px 0 0 !important;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Alert Styling */
+.alert-danger {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    border: 1px solid #f5c6cb;
+}
+
+/* Product Info */
+.product-info {
+    border-left: 4px solid #6c757d;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-info:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Consequences List */
+.consequences ul li {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.consequences ul li:hover {
+    background-color: #fff5f5;
+    transform: translateX(5px);
+}
+
+.consequences ul li:last-child {
+    border-bottom: none;
+}
+
+/* Safety Checklist */
+.safety-checklist ul li {
+    transition: all 0.3s ease;
+}
+
+.safety-checklist ul li:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+/* Button Styling */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    border: none;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+.btn-danger:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Product Image Styling */
+.product-icon img {
+    display: block;
+    border: 2px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.product-icon .bg-secondary {
+    border: 2px solid #dee2e6;
+}
+.form-check-input:checked {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Loading State */
+.btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        margin-bottom: 3rem !important;
+    }
+    
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const confirmCheckbox = document.getElementById('confirmDelete');
+    const deleteButton = document.getElementById('deleteButton');
+    const deleteForm = document.getElementById('deleteForm');
+    
+    // Enable/disable delete button based on checkbox
+    confirmCheckbox.addEventListener('change', function() {
+        deleteButton.disabled = !this.checked;
+    });
+    
+    // Add loading state on form submission
+    deleteForm.addEventListener('submit', function(e) {
+        if (!confirmCheckbox.checked) {
+            e.preventDefault();
+            alert('Please confirm that you understand this action cannot be undone.');
+            return;
+        }
+        
+        deleteButton.disabled = true;
+        deleteButton.classList.add('loading');
+        deleteButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Deleting...';
+    });
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Escape key to cancel
+        if (e.key === 'Escape') {
+            window.location.href = "{% url 'products:product_list' %}";
+        }
+        
+        // Ctrl/Cmd + Enter to delete (if confirmed)
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && confirmCheckbox.checked) {
+            deleteForm.submit();
+        }
+    });
+    
+    // Focus on checkbox for better UX
+    confirmCheckbox.focus();
+});
+</script>
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
